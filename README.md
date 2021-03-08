@@ -11,7 +11,7 @@ In this study, we developed DL network ensembles for the detection and segmentat
 The `${ROOT}` is described as below.
 ```
 ${ROOT}
-|-- data 
+|-- data
 |-- codes
 |-- trained_networks
 |-- examples
