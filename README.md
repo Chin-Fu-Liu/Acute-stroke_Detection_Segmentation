@@ -7,7 +7,9 @@ In this study, we developed DL network ensembles for the detection and segmentat
 <p align="middle">
     <img src="assets/exp_pic1.png", width="600" height="400">
 </p>
-
+<p align="middle">
+    <img src="assets/exp_pic2.png", width="600" height="400">
+</p>
 ## Directory
 ### Root
 The `${ROOT}` is described as below.
