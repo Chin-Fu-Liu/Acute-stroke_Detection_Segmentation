@@ -88,6 +88,5 @@ python ASDRun.py -input $SUBJECT_FOLDER
 ## Reference  
 
 ## License 
-
 This work is licensed under GNU General Public License v3.0, as found in the LICENSE file.
-[Creative Commons Attribution-ShareAlike 4.0 International License][cc-by-sa].
+
