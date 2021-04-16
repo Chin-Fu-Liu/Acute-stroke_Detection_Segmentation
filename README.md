@@ -20,11 +20,44 @@ ${ROOT}
 * `data` contains data like templates, image examples, and trained networks.
 * `codes` contains ASD pipeline bin codes and the main function.
 
-## Installation
+## Installation and Requirements
 
-### 
-1. Download pre-trained Networks from [here (google drive) under uploading](https://drive.google.com/drive/)
-2. Put the models at `Trained_Nets` folder
+### Required Dependencies 
+
+#### Python:
+#### TensorFlow:
+#### NiBabel:
+#### numpy:
+#### scipy:
+#### Dipy:
+
+### Download ASD from github
+Cloned the codes (for unix system, similar steps should be sufficient for Windows) with :
+```
+git clone https://github.com/Chin-Fu-Liu/Acute_Stroke_Detection/
+```
+
+### Create virtual environment
+
+From a bash shell, create a virtual environment in a folder (FOLDER_FOR_ENVS/ENVS_FOLDER_NAME) that you want.
+
+FOLDER_FOR_ENVS can be the path to the folder (`Acute_Stroke_Detection`) you create and clone from github.
+ENVS_FOLDER_NAME can be any name you like, like `ASD_ENV`
+
+Using Conda:
+```
+conda create -p FOLDER_FOR_ENVS/ENVS_FOLDER_NAME python=3.6.5 -y
+source activate FOLDER_FOR_ENVS/ENVS_FOLDER_NAME
+```
+Using Virtualenv:
+```
+virtualenv -p python3 FOLDER_FOR_ENVS/ENVS_FOLDER_NAME     # Use python up to 3.6
+source FOLDER_FOR_ENVS/ENVS_FOLDER_NAME/bin/activate      
+```
+
+### download pre-trained networks
+1. Download pre-trained networks from [here (google drive) under uploading](https://drive.google.com/drive/)
+2. Put the models at `Trained_Nets` folder 
 
 ## News
 * 2021.04.16. examples are updated. 
