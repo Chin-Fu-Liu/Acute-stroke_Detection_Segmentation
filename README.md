@@ -34,7 +34,5 @@ ${ROOT}
 
 ## License 
 
-Shield: [![GNU GPLv3][cc-by-sa-shield]][cc-by-sa]
-
 This work is licensed under GNU General Public License v3.0, as found in the LICENSE file.
 [Creative Commons Attribution-ShareAlike 4.0 International License][cc-by-sa].
