@@ -40,13 +40,21 @@ ${ROOT}
 #### scipy:
 #### Dipy:
 
-### Download ASD from github
+### Download ASD from github or google drive
 Cloned the codes (for unix system, similar steps should be sufficient for Windows) with :
 ```
 git clone https://github.com/Chin-Fu-Liu/Acute_Stroke_Detection/
 ```
+If you are not familiar with github, you can just download the whole ASD package (ASD.zip file) from google drive [here (google drive) under uploading](https://drive.google.com/drive/) and unzip it to create the `Acute_Stroke_Detection` main folder locally.
+
+### Download pre-trained networks
+1. Download pre-trained networks from [here (google drive) under uploading](https://drive.google.com/drive/)
+2. Put the models under `Trained_Nets` folder that is under your `Acute_Stroke_Detection` main folder.
+
 
 ### Create virtual environment
+
+We highly recommend creating a virtual enviroment for using this software. 
 
 From a bash shell, create a virtual environment in a folder (FOLDER_FOR_ENVS/ENVS_FOLDER_NAME) that you want.
 
@@ -67,10 +75,6 @@ Install all Dependencies as follows
 ```
 $ pip install tensorflow==2.0
 ```
-### Download pre-trained networks
-1. Download pre-trained networks from [here (google drive) under uploading](https://drive.google.com/drive/)
-2. Put the models under `Trained_Nets` folder that is under your `Acute_Stroke_Detection` main folder
-
 
 
 ## How to get new predict:
