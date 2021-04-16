@@ -11,8 +11,10 @@ The `${ROOT}` is described as below.
 ```
 ${ROOT}
 |-- data
+  |-- Trained+Nets
+  |-- examples
+  |-- template
 |-- codes
-|-- examples
 |-- tutorial
 ```
 
