@@ -13,7 +13,6 @@ The `${ROOT}` is described as below.
 ${ROOT}
 |-- data
 |-- codes
-|-- trained_networks
 |-- examples
 |-- tutorial
 ```
