@@ -68,7 +68,8 @@ $ pip install tensorflow==2.0
 
 In the `Acute_Stroke_Detection/codes` folder, run 
 ```bash
-python ASDRun.py -input $SUBJECT_FOLDER -model DAGMNet_CH3
+python ASDRun.py -input $SUBJECT_FOLDER 
+                 -model DAGMNet_CH3
 ```
 
 ## News
