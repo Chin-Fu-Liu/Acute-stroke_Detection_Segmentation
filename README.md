@@ -23,7 +23,7 @@ ${ROOT}
 ## Installation
 
 ### 
-1. Download pre-trained Networks from [here under uploading](https://drive.google.com/drive/)
+1. Download pre-trained Networks from [here (google drive) under uploading](https://drive.google.com/drive/)
 2. Put the models at `Trained_Nets` folder
 
 ## News
