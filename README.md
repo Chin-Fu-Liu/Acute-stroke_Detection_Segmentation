@@ -54,10 +54,22 @@ Using Virtualenv:
 virtualenv -p python3 FOLDER_FOR_ENVS/ENVS_FOLDER_NAME     # Use python up to 3.6
 source FOLDER_FOR_ENVS/ENVS_FOLDER_NAME/bin/activate      
 ```
-
-### download pre-trained networks
+Install all Dependencies as follows
+```
+$ pip install tensorflow==2.0
+```
+### Download pre-trained networks
 1. Download pre-trained networks from [here (google drive) under uploading](https://drive.google.com/drive/)
-2. Put the models at `Trained_Nets` folder 
+2. Put the models under `Trained_Nets` folder that is under your `Acute_Stroke_Detection` main folder
+
+
+
+## How to get new predict:
+
+In the `Acute_Stroke_Detection/codes` folder, run 
+```bash
+python ASD.py --input $DB_SPLIT --annot_subset $SUBSET
+```
 
 ## News
 * 2021.04.16. examples are updated. 
