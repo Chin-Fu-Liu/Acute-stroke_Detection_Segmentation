@@ -1,5 +1,4 @@
-# Acute_Stroke_Segmentation
-
+# Acute_Stroke_Detection
 
 ## Introduction
 
