@@ -10,9 +10,12 @@ In this study, we developed DL network ensembles for the detection and segmentat
 <p align="middle">
     <img src="assets/exp_pic2.PNG", width="600" height="360">
 </p>
+
+
 ## Directory
 ### Root
 The `${ROOT}` is described as below.
+
 ```
 ${ROOT}
 |-- data
