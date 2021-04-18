@@ -30,35 +30,37 @@ ${ROOT}
 * `codes` contains ASD pipeline bin codes and the main function.
 
 ## Installation and Requirements
-
 ### Required Dependencies 
 
-#### Python:
-#### TensorFlow:
-#### NiBabel:
-#### numpy:
-#### scipy:
-#### Dipy:
+#### python (version 3.7.7): Please make sure the version is at least 3.6+
+#### tensorFlow (version 2.0.0): The Deep Learning networks library for backend.
+#### niBabel (version 3.2.1): For loading NIFTI files.
+#### numpy (version 1.19.5): Gerenal computing array processing library.
+#### scipy (version 1.4.1): For image operation/processing. 
+#### dipy (version 1.4.0): For image registration
+#### scikit-image (version 0.18.1): For image operation/processing. 
+#### scikit-learn (version 0.24.1): Not necessary, but recommended to install as well, because we will update codes which has this dependency in the future. 
 
-### Download ASD from github or google drive
+### STEP 1: Download ASD from github or google drive
+
 Cloned the codes (for unix system, similar steps should be sufficient for Windows) with :
 ```
 git clone https://github.com/Chin-Fu-Liu/Acute_Stroke_Detection/
 ```
 If you are not familiar with github, you can just download the whole ASD package (ASD.zip file) from google drive [here (google drive) under uploading](https://drive.google.com/drive/) and unzip it to create the `Acute_Stroke_Detection` main folder locally.
 
-### Download pre-trained networks
+### Download pre-trained networks :
 1. Download pre-trained networks from [here (google drive) under uploading](https://drive.google.com/drive/)
-2. Put the models under `Trained_Nets` folder that is under your `Acute_Stroke_Detection` main folder.
+2. Unzip and put all the models ('MODEL_NAMES.h5' files) directly under `Trained_Nets` folder that is under your `Acute_Stroke_Detection` main folder.
 
 
-### Create virtual environment
+### STEP 2: Create virtual environment and activate the virtual environment:
 
 We highly recommend creating a virtual enviroment for using this software. 
 
 From a bash shell, create a virtual environment in a folder (FOLDER_FOR_ENVS/ENVS_FOLDER_NAME) that you want.
 
-FOLDER_FOR_ENVS can be the path to the folder (`Acute_Stroke_Detection`) you create and clone from github.
+FOLDER_FOR_ENVS can be the path to the folder (`Acute_Stroke_Detection`) you create and clone from github or google drive.
 ENVS_FOLDER_NAME can be any name you like, like `ASD_ENV`
 
 Using Conda:
@@ -68,22 +70,30 @@ source activate FOLDER_FOR_ENVS/ENVS_FOLDER_NAME
 ```
 Using Virtualenv:
 ```
-virtualenv -p python3 FOLDER_FOR_ENVS/ENVS_FOLDER_NAME     # Use python up to 3.6
+virtualenv -p python3 FOLDER_FOR_ENVS/ENVS_FOLDER_NAME     # Use python up to 3.6+
 source FOLDER_FOR_ENVS/ENVS_FOLDER_NAME/bin/activate      
 ```
-Install all Dependencies as follows
+
+###  STEP 3: Install all Dependencies as follows
 ```
-$ pip install tensorflow==2.0
+$ pip install numpy nibabel scipy scikit-image scikit-learn
+$ pip install dipy==1.4.0
+$ pip install tensorflow-gpu==2.0.0
 ```
 
 
-## How to get new predict:
+### STEP 4: How to get new predict
+
+Navigate to to the `/Acute_Stroke_Detection/codes` folder
 
 In the `Acute_Stroke_Detection/codes` folder, run 
+
 ```bash
 python ASDRun.py -input $SUBJECT_FOLDER 
                  -model DAGMNet_CH3
 ```
+
+
 
 ## News
 * 2021.04.16. examples are updated. 
