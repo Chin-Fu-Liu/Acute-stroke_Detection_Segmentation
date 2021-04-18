@@ -26,20 +26,20 @@ ${ROOT}
 |-- tutorial
 ```
 
-    * `data` contains data like templates, image examples, and trained networks.
-    * `codes` contains ASD pipeline bin codes and the main function.
+* `data` contains data like templates, image examples, and trained networks.
+* `codes` contains ASD pipeline bin codes and the main function.
 
 ## Installation and Requirements
 ### Required Dependencies 
 
-    * python (version 3.7.7): Please make sure the version is at least 3.6+
-    * tensorFlow (version 2.0.0): The Deep Learning networks library for backend.
-    * niBabel (version 3.2.1): For loading NIFTI files.
-    * numpy (version 1.19.5): Gerenal computing array processing library.
-    * scipy (version 1.4.1): For image operation/processing. 
-    * dipy (version 1.4.0): For image registration
-    * scikit-image (version 0.18.1): For image operation/processing. 
-    * scikit-learn (version 0.24.1): Not necessary, but recommended to install as well, because we will update codes which has this dependency in the future. 
+* python (version 3.7.7): Please make sure the version is at least 3.6+
+* tensorFlow (version 2.0.0): The Deep Learning networks library for backend.
+* niBabel (version 3.2.1): For loading NIFTI files.
+* numpy (version 1.19.5): Gerenal computing array processing library.
+* scipy (version 1.4.1): For image operation/processing. 
+* dipy (version 1.4.0): For image registration
+* scikit-image (version 0.18.1): For image operation/processing. 
+* scikit-learn (version 0.24.1): Not necessary, but recommended to install as well, because we will update codes which has this dependency in the future. 
 
 ### STEP 1: Download ASD from github or google drive
 
