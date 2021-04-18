@@ -89,18 +89,27 @@ Navigate to to the `/Acute_Stroke_Detection/codes` folder
 In the `Acute_Stroke_Detection/codes` folder, run 
 
 ```bash
-python ASDRun.py -input $SUBJECT_FOLDER 
+python ASDRun.py -input $SUBJECTID_FOLDER 
                  -model DAGMNet_CH3
 ```
 
-### The data format under `SUBJECT_FOLDER` folder
-`SUBJECT_FOLDER` should be the SubjectID, in our example folder, we put it like `Subject01` or `Subject02`.
-Each `SUBJECT_FOLDER` folder should contain DWI and b0 images whose naming is as following:
+### The data format under `SUBJECTID_FOLDER` folder
+`SUBJECTID_FOLDER` should be named by its SubjectID, in our example folder, we put it like `Subject01` or `Subject02`.
+Each `SUBJECTID_FOLDER` folder should contain DWI and b0 images whose naming is as following:
 
 `SubjectID_DWI.nii.gz`
 `SubjectID_b0.nii.gz`
 
 The naming is case sensitive.
+
+### Options for ASDRun.py
+
+For detail description, run -h for help as following
+```
+python ASDRun.py -h
+```
+
+
 
 
 
