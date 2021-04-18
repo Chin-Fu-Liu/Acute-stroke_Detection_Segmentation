@@ -23,7 +23,6 @@ ${ROOT}
     |-- examples
     |-- template
 |-- codes
-|-- tutorial
 ```
 
 * `data` contains data like templates, image examples, and trained networks.
