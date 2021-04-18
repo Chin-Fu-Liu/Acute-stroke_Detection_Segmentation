@@ -1,24 +1,26 @@
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+#
+
 try:
     import tensorflow.keras
-    print ('load keras from tensorflow package')
+#     print ('load keras from tensorflow package')
 except:
     print ('update your tensorflow')
 import tensorflow as tf
 
 import tensorflow.keras.backend as K
-from tensorflow.keras import optimizers, metrics
-from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.models import model_from_json, load_model
 from tensorflow.compat.v2.keras.utils import multi_gpu_model
 
 # # Use on GPU
 import os
-# os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID" 
-# os.environ['CUDA_VISIBLE_DEVICES'] = "" # or '1' or whichever GPU is available on your machine
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID" 
+os.environ['CUDA_VISIBLE_DEVICES'] = "" # or '1' or whichever GPU is available on your machine
 
 # for save model
 import h5py
-import json, pickle
 
 # default
 import numpy as np
@@ -28,6 +30,7 @@ import glob
 import scipy.io as sio
 import nibabel as nib
 import scipy
+import time
 
 from skimage import measure
 from matplotlib import gridspec
@@ -52,33 +55,54 @@ from scipy.ndimage import morphology, gaussian_filter
 from scipy.special import erf
 from scipy.optimize import minimize,leastsq, curve_fit
 
-from pylab import *
+# from pylab import *
 
-# for shuffle
-import random
+import warnings
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    warnings.warn("deprecated", DeprecationWarning)
 
-def Cal_ADC(Dwi_ImgJ, B0_ImgJ, ADCPath):
+np.warnings.filterwarnings('ignore', category=np.VisibleDeprecationWarning)
     
-    Dwi_img = np.squeeze(Dwi_ImgJ.get_fdata())
-    B0_img = np.squeeze(B0_ImgJ.get_fdata())
-    
-    e = 1e-10;
-    ADC_img =  (-np.log((Dwi_img+e)/(B0_img+e))/1000)*(B0_img>0)*(Dwi_img>0)
-    
-    ADC_header = Dwi_ImgJ.header
-    ADC_header['glmax'] = np.max(ADC_img)
-    ADC_header['glmin'] = np.min(ADC_img)
-    ADC_ImgJ = nib.Nifti1Image(ADC_img,Dwi_ImgJ.affine,ADC_header)
-    ADC_ImgJ.set_data_dtype(np.float32)
-    nib.save(ADC_ImgJ, ADCPath)
-    
+def get_new_NibImgJ(new_img, temp_imgJ, dataType=np.float32):
+    temp_imgJ.set_data_dtype(dataType)
+    img_header = temp_imgJ.header
+    img_header['glmax'] = np.max(new_img)
+    img_header['glmin'] = np.min(new_img)
+    new_imgJ = nib.Nifti1Image(new_img,temp_imgJ.affine,img_header)
+    return new_imgJ
+
 def load_img_AffMat(img_fnamePth):
     imgJ = nib.load(img_fnamePth)
     img = np.squeeze(imgJ.get_fdata())
     img_AffMat = imgJ.affine
     return imgJ, img, img_AffMat
 
+def MNIdePadding_imgJ(imgJ):
+    img = np.squeeze(imgJ.get_fdata())
+    de_img = img[5:186, 3:220, 5:186]
+    
+    deimg_AffMatt = imgJ.affine
+    deimg_AffMatt[0,3] = 91
+    deimg_AffMatt[1,3] = -109
+    deimg_AffMatt[2,3] = -91
+    
+    img_header = imgJ.header
+    img_header['glmax'] = np.max(de_img)
+    img_header['glmin'] = np.min(de_img)
+    
+    de_imgJ = nib.Nifti1Image(de_img, deimg_AffMatt, img_header)
+    return de_imgJ
 
+def Cal_ADC(Dwi_ImgJ, B0_ImgJ, ADCPath):
+    Dwi_img = np.squeeze(Dwi_ImgJ.get_fdata())
+    B0_img = np.squeeze(B0_ImgJ.get_fdata())
+    e = 1e-10;
+    ADC_img =  (-np.log((Dwi_img+e)/(B0_img+e))/1000)*(B0_img>0)*(Dwi_img>0)
+    ADC_ImgJ = get_new_NibImgJ(ADC_img, Dwi_ImgJ, dataType=np.float32)
+    nib.save(ADC_ImgJ, ADCPath)
+ 
+   
 def Sequential_Registration_b0(static, static_grid2world, moving, moving_grid2world, level_iters = [5], sigmas = [3.0], factors = [2]):
     pipeline = [center_of_mass, translation, rigid, affine]
     xformed_img, reg_affine = affine_registration(
@@ -172,13 +196,13 @@ def get_MaskNet_MNI(model, Dwi_MNI_img, B0_MNI_img):
     return upsampling_mask
 
 def gauss(x,mu,sigma,A):
-    return A*exp(-(x-mu)**2/2/sigma**2)
+    return A*np.exp(-(x-mu)**2/2/sigma**2)
 
 def bimodal(x,mu1,sigma1,A1,mu2,sigma2,A2):
     return gauss(x,mu1,sigma1,A1)+gauss(x,mu2,sigma2,A2)
 
 def qfunc(x):
-    return 0.5-0.5*scipy.special.erf(x/sqrt(2))
+    return 0.5-0.5*scipy.special.erf(x/np.sqrt(2))
 
 def get_dwi_normalized(Dwi_ss_MNI_img,mask_raw_MNI_img):
     Dwi_d = Dwi_ss_MNI_img[mask_raw_MNI_img>0.5]
@@ -209,20 +233,20 @@ def get_dwi_normalized(Dwi_ss_MNI_img,mask_raw_MNI_img):
 def get_Prob_IS(Dwi_ss_MNI_norm_img, ADC_ss_MNI_img, mask_raw_MNI_img, 
                 TemplateDir='/cis/home/hliu/projects/ASD_pipeline/data/template/', 
                 model_vars = [2,1.5,4,0.5,2,2]):
-    template_fnamePth = os.path.join(TemplateDir, 'normal_mu_dwi_Res_ss_IP_scaled_normalized.nii.gz')   
+    template_fnamePth = os.path.join(TemplateDir, 'normal_mu_dwi_Res_ss_MNI_scaled_normalized.nii.gz')   
     _, normal_dwi_mu_img, _ = load_img_AffMat(template_fnamePth)
 
-    template_fnamePth = os.path.join(TemplateDir, 'normal_std_dwi_Res_ss_IP_scaled_normalized.nii.gz')   
+    template_fnamePth = os.path.join(TemplateDir, 'normal_std_dwi_Res_ss_MNI_scaled_normalized.nii.gz')   
     _, normal_dwistd_img, _ = load_img_AffMat(template_fnamePth)
 
-    template_fnamePth = os.path.join(TemplateDir, 'normal_mu_ADC_Res_ss_IP_normalized.nii.gz')   
+    template_fnamePth = os.path.join(TemplateDir, 'normal_mu_ADC_Res_ss_MNI_normalized.nii.gz')   
     _, normal_adc_mu_img, _ = load_img_AffMat(template_fnamePth)
 
-    template_fnamePth = os.path.join(TemplateDir, 'normal_std_ADC_Res_ss_IP_normalized.nii.gz')   
+    template_fnamePth = os.path.join(TemplateDir, 'normal_std_ADC_Res_ss_MNI_normalized.nii.gz')   
     _, normal_adc_std_img, _ = load_img_AffMat(template_fnamePth)
     
     fwhm = model_vars[0];
-    g_sigma = fwhm/2/sqrt(2*log(2));
+    g_sigma = fwhm/2/np.sqrt(2*np.log(2));
     alpha_dwi = model_vars[1];
     lambda_dwi = model_vars[2];
     alpha_adc = model_vars[3];
@@ -277,128 +301,6 @@ def get_stroke_seg_MNI(model, dwi_img, adc_img, Prob_IS=None, N_channel=3, DS=2)
     
     return stroke_pred_tmp
 
-def ASD_pipeline(SubjDir, 
-                 SubjID,
-                 TemplateDir,
-                 MaskNet_name ,
-                 Lesion_model_name,
-                 level_iters = [3], 
-                 sigmas = [3.0], 
-                 factors = [2], 
-                 N_channel = 3
-                ):
-    # loading dwi, b0
-    
-    print('------ Loading DWI, b0 ------')
-    DwiFileName = SubjID + '_DWI.nii.gz'
-    B0FileName = SubjID + '_b0.nii.gz'
-
-    DwiPath = os.path.join(SubjDir, DwiFileName)
-    B0Path = os.path.join(SubjDir, B0FileName)
-
-    Dwi_imgJ, Dwi_img, _ = load_img_AffMat(DwiPath)
-    B0_imgJ, B0_img, B0_AffMat = load_img_AffMat(B0Path)
-
-    # calculate ADC
-    print('------ Calculating ADC ------')
-    ADCPath = os.path.join(SubjDir, DwiFileName.replace('DWI','ADC'))
-    Cal_ADC(Dwi_imgJ, B0_imgJ, ADCPath)
-
-    # loading ADC
-    print('------ Loading ADC ------')
-    ADC_imgJ, ADC_img, _ = load_img_AffMat(ADCPath)
-    
-    # loading template
-    print('------ Loading JHU_SS_b0_padding template------')
-    JHU_B0_withskull_fnamePth = os.path.join(TemplateDir, 'JHU_SS_b0_padding.nii.gz')
-    JHU_B0_imgJ, JHU_B0_img, JHU_B0_AffMat = load_img_AffMat(JHU_B0_withskull_fnamePth)
-    
-    # mapping to MNI with skull for MaskNet
-    print('------ Mapping to MNI with skull for MaskNet------')
-    B0_MNI_img, reg_affine, affine_map = Sequential_Registration_b0(static=JHU_B0_img, 
-                                                                static_grid2world=JHU_B0_AffMat,
-                                                                moving=B0_img,
-                                                                moving_grid2world=B0_AffMat,
-                                                                level_iters = level_iters, 
-                                                                sigmas = sigmas, 
-                                                                factors = factors
-                                                               )
-    
-    Dwi_MNI_img = affine_map.transform(Dwi_img)
-#     ADC_MNI_img = affine_map.transform(ADC_img)
-    
-    # Loading MaskNet
-    print('------ Loading MaskNet------')
-    MaskNet = load_model(MaskNet_name)
-    
-    # get brain mask in raw space
-    print('------ inferencing brain mask------')
-    mask_MNI_img = get_MaskNet_MNI(MaskNet, Dwi_MNI_img, B0_MNI_img)
-    mask_raw_img = affine_map.transform_inverse((mask_MNI_img>0.5)*1, interpolation='nearest')
-    
-    # get skull stripped dwi, b0, adc
-    print('------ skull-stripping------')
-    Dwi_ss_img = Dwi_img*mask_raw_img
-    B0_ss_img = B0_img*mask_raw_img
-    ADC_ss_img = ADC_img*mask_raw_img
-    
-    # loading template_ss 
-    print('------ Loading JHU_SS_b0_ss_padding template------')
-    JHU_B0_ss_fnamePth = os.path.join(TemplateDir, 'JHU_SS_b0_ss_padding.nii.gz')  
-    JHU_B0_ss_imgJ, JHU_B0_ss_img, JHU_B0_ss_AffMat = load_img_AffMat(JHU_B0_ss_fnamePth)
-    
-    # get mapping to MNI without skull for lesion detection model
-    print('------ Mapping to MNI without skull for lesion detection model------')
-    B0_ss_MNI_img, reg_affine, affine_map = Sequential_Registration_b0(static=JHU_B0_ss_img, 
-                                                                    static_grid2world=JHU_B0_ss_AffMat,
-                                                                    moving=B0_ss_img,
-                                                                    moving_grid2world=B0_AffMat,
-                                                                    level_iters = level_iters, 
-                                                                    sigmas = sigmas, 
-                                                                    factors = factors
-                                                                   )
-    # mapping images to MNI
-    Dwi_ss_MNI_img = affine_map.transform(Dwi_ss_img)
-    ADC_ss_MNI_img = affine_map.transform(ADC_ss_img)
-    mask_raw_MNI_img = affine_map.transform(mask_raw_img, interpolation='nearest') 
-    
-    # get normalized dwi
-    print('------ Normalizing dwi------')
-    Dwi_ss_MNI_norm_img = get_dwi_normalized(Dwi_ss_MNI_img,mask_raw_MNI_img)
-    
-    # get Prob. IS
-    if N_channel==3:
-        print('------ Calculating Prob. IS Map for CH3------')
-        Prob_IS = get_Prob_IS(Dwi_ss_MNI_norm_img, ADC_ss_MNI_img,  mask_raw_MNI_img)
-    else:
-        Prob_IS = None
-        
-    # get standard normalization within brainmask
-    
-    tmp = Dwi_ss_MNI_norm_img[mask_raw_MNI_img>0.5]
-    Dwi_ss_MNI_BSN_img = (Dwi_ss_MNI_norm_img - np.mean(tmp)) / np.std(tmp)
-
-    tmp = ADC_ss_MNI_img[mask_raw_MNI_img>0.5]
-    ADC_ss_MNI_BSN_img = (ADC_ss_MNI_img - np.mean(tmp)) / np.std(tmp)
-    
-    # load detection model
-    print('------ Loading detection model------')
-    Lesion_model = load_model(Lesion_model_name)
-    
-    # get lesion prediction
-    print('------ Inferencing lesion prediction------')
-    stroke_pred_img = get_stroke_seg_MNI(Lesion_model, 
-                                         Dwi_ss_MNI_BSN_img, 
-                                         ADC_ss_MNI_BSN_img, 
-                                         Prob_IS, 
-                                         N_channel=N_channel)
-    stroke_pred_img = stroke_pred_img*mask_raw_MNI_img
-    # map lesion back to raw space
-    stroke_pred_raw_img = affine_map.transform_inverse((stroke_pred_img>0.5)*1, interpolation='nearest')
-    stroke_pred_raw_img = stroke_pred_raw_img*mask_raw_img
-    stroke_pred_raw_img = (stroke_pred_raw_img>0.5)*1
-    return stroke_pred_raw_img
-
 def get_DirPaths():
     CodesDir = os.path.join(os.getcwd(),'')
     ProjectDir = os.path.join('/'.join(CodesDir.split('/')[0:-2]),'')
@@ -406,49 +308,7 @@ def get_DirPaths():
     TrainedNetsDir = os.path.join(ProjectDir,'data','Trained_Nets','')
     return CodesDir, ProjectDir, TemplateDir, TrainedNetsDir
 
-
-def ASD(SubjDir,
-         model_name='DAGMNet_CH3',
-         level_iters = [3],
-         sigmas = [3.0],
-         factors = [2],
-         lesion_name='Lesion_Predict'
-        ):
-    
-    CodesDir, ProjectDir, TemplateDir, TrainedNetsDir = get_DirPaths()
-    SubjID = os.path.join(SubjDir,'').split('/')[-2]
-    MaskNet_name =  os.path.join(TrainedNetsDir,'BrainMaskNet.h5')
-    Lesion_model_name = os.path.join(TrainedNetsDir,model_name+'.h5')
-    
-    if 'CH2' in model_name:
-        N_channel = 2
-    elif 'CH3' in model_name:
-        N_channel = 3
-        
-    stroke_pred_raw_img = ASD_pipeline(SubjDir,
-             SubjID,
-             TemplateDir=TemplateDir,
-             MaskNet_name = MaskNet_name,
-             Lesion_model_name = Lesion_model_name,
-             level_iters = level_iters, 
-             sigmas = sigmas, 
-             factors = factors, 
-             N_channel = N_channel
-            )
-    
-    DwiFileName = SubjID + '_DWI.nii.gz'
-    DwiPath = os.path.join(SubjDir, DwiFileName)
-    Dwi_imgJ, _, _ = load_img_AffMat(DwiPath)
-    
-    LP_header = Dwi_imgJ.header
-    LP_header['glmax'] = np.max(stroke_pred_raw_img)
-    LP_header['glmin'] = np.min(stroke_pred_raw_img)
-    LP_ImgJ = nib.Nifti1Image(stroke_pred_raw_img,Dwi_imgJ.affine,LP_header)
-    LP_ImgJ.set_data_dtype(np.int16)
-    
-    nib.save(LP_ImgJ, os.path.join(SubjDir, SubjID + '_' + lesion_name + '.nii.gz'))
-
-def generate_result_png(SubjDir, 
+def gen_result_png(SubjDir, 
                         lesion_name='Lesion_Predict',
                         wspace=-0.1,
                         hspace=-0.5
@@ -505,6 +365,306 @@ def generate_result_png(SubjDir,
 
     plt.tight_layout()
     gs0.update(wspace=wspace, hspace=hspace)
-    plt.savefig(os.path.join(SubjDir, SubjID + '_result.png'), bbox_inches = "tight")
+    plt.savefig(os.path.join(SubjDir, SubjID + '_' + lesion_name + '_result.png'), bbox_inches = "tight")
 #     plt.show()
     plt.close()
+    
+def get_VasLobeTemp(TemplateDir):
+    vas_pth = os.path.join(TemplateDir,'vascular_atlas_prob2.nii.gz')
+    lobe_pth = os.path.join(TemplateDir,'lobe_atlas.nii.gz') 
+
+    vas_imgJ, vas_img, vas_AffMat = load_img_AffMat(vas_pth)
+    lobe_imgJ, lobe_img, lobe_AffMat = load_img_AffMat(lobe_pth)
+
+    vas_ = vas_img
+    vas_combine = np.zeros_like(vas_)
+    vas_combine[ (vas_==1) | (vas_==2) | (vas_==11) | (vas_==12)] = 1 # ACA
+    vas_combine[ (vas_==3) | (vas_==4) | (vas_==9) | (vas_==10)] = 2 # MCA
+    vas_combine[ (vas_==5) | (vas_==6) | (vas_==17) | (vas_==18)| (vas_==13) | (vas_==14)] = 3 # PCA
+    vas_combine[ (vas_==7) | (vas_==8) | (vas_==19) | (vas_==20)| (vas_==15) | (vas_==16)] = 4 # VEB 
+
+    vas_img_LR = np.zeros_like(vas_)
+    vas_img_LR[(vas_%2==1)] = 1 # vas_L
+    vas_img_LR[(vas_%2==0) & (vas_!=0)] = 2 # vas_R
+    
+    vas_table_pth = os.path.join(TemplateDir,'ArterialAtlasLabelLookupTable.txt')
+    with open(vas_table_pth) as f:
+        vas_contents = f.readlines()
+
+    lobe_table_pth = os.path.join(TemplateDir,'LobesLabelLookupTable.txt') 
+    with open(lobe_table_pth) as f:
+        lobe_contents = f.readlines()
+    
+    vas_LR = ['L', 'R']
+    vas_L1 = [ _.split('\t')[2] for _ in vas_contents]
+    vas_L2 = ['ACA', 'MCA', 'PCA', 'VB']
+    lobe_L1 = [ _.split('\t')[1].replace('\n','') for _ in lobe_contents]
+    return vas_img, vas_combine, vas_img_LR, lobe_img, vas_LR, vas_L1, vas_L2, lobe_L1
+
+def get_category_features(stroke_img, temp):
+    v=np.zeros(np.int(temp.max()))
+    inters = (stroke_img>0.5) * temp
+    for i in range(np.int(temp.max())):
+        v[i] = np.sum(inters==(i+1))
+    return v
+
+
+def gen_lesion_report(SubjDir, SubjID, lesion_img, TemplateDir):
+    
+    vas_img, vas_combine, vas_img_LR, lobe_img, vas_LR, vas_L1, vas_L2, lobe_L1 = get_VasLobeTemp(TemplateDir)
+    
+    Lesion_vol = np.sum(lesion_img)
+    vas_v_L1 = get_category_features(lesion_img, vas_img)
+    vas_v_L2 = get_category_features(lesion_img, vas_combine)
+    vas_v_LR = get_category_features(lesion_img, vas_img_LR)
+    lobe_v_L1 = get_category_features(lesion_img, lobe_img)
+    
+    ReportTxt_pth = os.path.join(SubjDir, SubjID + '_report.txt')
+    with open(ReportTxt_pth, 'w') as f:
+        f.write('Lesion volume (total) in mm3\t %d \n' % Lesion_vol)
+#         f.write('Lesion volume in the left hemisphere\t %d \n' % vas_v_LR[0])
+#         f.write('Lesion volume in the right hemisphere\t %d \n' % vas_v_LR[1])
+
+        f.write('\nLesion volume in each vascular region (level 2)\n')
+        for _ in range(len(vas_v_L2)):
+            f.write( vas_L2[_] + '\t %d \n' % vas_v_L2[_])
+
+        f.write('\nLesion volume in each vascular region (level 1)\n')
+        for _ in range(len(vas_v_L1)):
+            f.write( vas_L1[_] + '\t %d \n' % vas_v_L1[_])
+
+        f.write('\nLesion volume per area (level 1)\n')
+        for _ in range(len(lobe_v_L1)):
+            f.write(lobe_L1[_] + '\t %d \n' % lobe_v_L1[_])
+            
+#         f.write('\nLesion volume in each vascular region (level 2)\n')
+#         for _ in range(len(vas_v_L2)):
+#             f.write( vas_L2[_] + '\t %d ' % vas_v_L2[_] + ' (%0.1f \%)' % vas_v_L2[_]/Lesion_vol + '\n')
+
+#         f.write('\nLesion volume in each vascular region (level 1)\n')
+#         for _ in range(len(vas_v_L1)):
+#             f.write( vas_L1[_] + '\t %d ' % vas_v_L1[_] + ' (%0.1f \%)' % vas_v_L1[_]/Lesion_vol + '\n')
+
+#         f.write('\nLesion volume per area (level 1)\n')
+#         for _ in range(len(lobe_v_L1)):
+#             f.write(lobe_L1[_] + '\t %d ' % lobe_v_L1[_] + ' (%0.1f \%)' % lobe_v_L1[_]/Lesion_vol + '\n')
+            
+            
+def ASD_pipeline(SubjDir, 
+                 SubjID,
+                 TemplateDir,
+                 MaskNet_name,
+                 Lesion_model_name,
+                 N_channel,
+                 level_iters = [3], 
+                 sigmas = [3.0], 
+                 factors = [2], 
+                 lesion_name='Lesion_Predict',
+                 save_MNI=True, 
+                 generate_report=True,
+                 generate_result_png=True
+                ):
+    start_time = time.time()
+
+    # loading dwi, b0
+    print('------ Loading DWI, b0 ------')
+    DwiFileName = SubjID + '_DWI.nii.gz'
+    B0FileName = SubjID + '_b0.nii.gz'
+
+    DwiPath = os.path.join(SubjDir, DwiFileName)
+    B0Path = os.path.join(SubjDir, B0FileName)
+
+    Dwi_imgJ, Dwi_img, _ = load_img_AffMat(DwiPath)
+    B0_imgJ, B0_img, B0_AffMat = load_img_AffMat(B0Path)
+
+    # calculate ADC
+    print('------ Calculating ADC ------')
+    ADCPath = os.path.join(SubjDir, DwiFileName.replace('DWI','ADC'))
+    Cal_ADC(Dwi_imgJ, B0_imgJ, ADCPath)
+
+    # loading ADC
+    print('------ Loading ADC ------')
+    ADC_imgJ, ADC_img, _ = load_img_AffMat(ADCPath)
+    
+    # loading template
+    print('------ Loading JHU_SS_b0_padding template------')
+    JHU_B0_withskull_fnamePth = os.path.join(TemplateDir, 'JHU_SS_b0_padding.nii.gz')
+    JHU_B0_imgJ, JHU_B0_img, JHU_B0_AffMat = load_img_AffMat(JHU_B0_withskull_fnamePth)
+    
+    # mapping to MNI with skull for MaskNet
+    start_time = time.time()
+    print('------ Mapping to MNI with skull for MaskNet------')
+    B0_MNI_img, reg_affine, affine_map = Sequential_Registration_b0(static=JHU_B0_img, 
+                                                                static_grid2world=JHU_B0_AffMat,
+                                                                moving=B0_img,
+                                                                moving_grid2world=B0_AffMat,
+                                                                level_iters = level_iters, 
+                                                                sigmas = sigmas, 
+                                                                factors = factors
+                                                               )
+    print('------ Finished mapping to MNI with skull for MaskNet------') 
+    print('It takes %.2f seconds'% (time.time() - start_time))
+    start_time = time.time()
+    
+    Dwi_MNI_img = affine_map.transform(Dwi_img)
+#     ADC_MNI_img = affine_map.transform(ADC_img)
+    
+    # Loading MaskNet
+    print('------ Loading MaskNet------')
+    MaskNet = load_model(MaskNet_name, compile=False)
+    
+    # get brain mask in raw space
+    print('------ Inferencing brain mask------')
+    mask_MNI_img = get_MaskNet_MNI(MaskNet, Dwi_MNI_img, B0_MNI_img)
+    mask_raw_img = affine_map.transform_inverse((mask_MNI_img>0.5)*1, interpolation='nearest')
+    
+    print('------ Finished inferencing brain mask------')
+    print('It takes %.2f seconds'% (time.time() - start_time))
+    start_time = time.time()
+    
+    # get skull stripped dwi, b0, adc
+    print('------ skull-stripping------')
+    Dwi_ss_img = Dwi_img*mask_raw_img
+    B0_ss_img = B0_img*mask_raw_img
+    ADC_ss_img = ADC_img*mask_raw_img
+    
+    # loading template_ss 
+    print('------ Loading JHU_SS_b0_ss_padding template------')
+    JHU_B0_ss_fnamePth = os.path.join(TemplateDir, 'JHU_SS_b0_ss_padding.nii.gz')  
+    JHU_B0_ss_imgJ, JHU_B0_ss_img, JHU_B0_ss_AffMat = load_img_AffMat(JHU_B0_ss_fnamePth)
+    
+    # get mapping to MNI without skull for lesion detection model
+    print('------ Mapping to MNI without skull for lesion detection model ------')
+    B0_ss_MNI_img, reg_affine, affine_map = Sequential_Registration_b0(static=JHU_B0_ss_img, 
+                                                                    static_grid2world=JHU_B0_ss_AffMat,
+                                                                    moving=B0_ss_img,
+                                                                    moving_grid2world=B0_AffMat,
+                                                                    level_iters = level_iters, 
+                                                                    sigmas = sigmas, 
+                                                                    factors = factors
+                                                                   )
+    # mapping images to MNI
+    Dwi_ss_MNI_img = affine_map.transform(Dwi_ss_img)
+    ADC_ss_MNI_img = affine_map.transform(ADC_ss_img)
+    mask_raw_MNI_img = affine_map.transform(mask_raw_img, interpolation='nearest') 
+        
+    print('------ Mapping to MNI without skull for lesion detection model ------')
+    print('It takes %.2f seconds'% (time.time() - start_time))
+    start_time = time.time()
+    
+    # get normalized dwi
+    print('------ Normalizing dwi------')
+    Dwi_ss_MNI_norm_img = get_dwi_normalized(Dwi_ss_MNI_img,mask_raw_MNI_img)
+    
+    # get Prob. IS
+    if N_channel==3:
+        print('------ Calculating Prob. IS Map for CH3 ------')
+        Prob_IS = get_Prob_IS(Dwi_ss_MNI_norm_img, ADC_ss_MNI_img,  mask_raw_MNI_img)
+    else:
+        Prob_IS = None
+        
+    # get standard normalization within brainmask
+    
+    tmp = Dwi_ss_MNI_norm_img[mask_raw_MNI_img>0.5]
+    Dwi_ss_MNI_BSN_img = (Dwi_ss_MNI_norm_img - np.mean(tmp)) / np.std(tmp)
+
+    tmp = ADC_ss_MNI_img[mask_raw_MNI_img>0.5]
+    ADC_ss_MNI_BSN_img = (ADC_ss_MNI_img - np.mean(tmp)) / np.std(tmp)
+    
+    # load detection model
+    print('------ Loading detection model ------')
+    Lesion_model = load_model(Lesion_model_name, compile=False)
+    start_time = time.time()
+    
+    # get lesion prediction
+    print('------ Inferencing lesion prediction ------')
+    stroke_pred_img = get_stroke_seg_MNI(Lesion_model, 
+                                         Dwi_ss_MNI_BSN_img, 
+                                         ADC_ss_MNI_BSN_img, 
+                                         Prob_IS, 
+                                         N_channel=N_channel)
+    stroke_pred_img = stroke_pred_img*mask_raw_MNI_img
+    # map lesion back to raw space
+    stroke_pred_raw_img = affine_map.transform_inverse((stroke_pred_img>0.5)*1, interpolation='nearest')
+    stroke_pred_raw_img = stroke_pred_raw_img*mask_raw_img
+    stroke_pred_raw_img = (stroke_pred_raw_img>0.5)*1
+    
+    print('------ Inferencing lesion prediction ------')
+    print('It takes %.2f seconds'% (time.time() - start_time))
+    start_time = time.time()
+    
+    # save images in MNI
+    if save_MNI:
+        print('------ Saving images in MNI. ------')
+        Dwi_ss_MNI_imgJ = get_new_NibImgJ(Dwi_ss_MNI_img, JHU_B0_ss_imgJ, dataType=np.float32)
+        Dwi_ss_MNI_imgJ = MNIdePadding_imgJ(Dwi_ss_MNI_imgJ)
+        nib.save(Dwi_ss_MNI_imgJ, os.path.join(SubjDir, SubjID + '_DWI_MNI.nii.gz'))
+        
+        B0_ss_MNI_imgJ = get_new_NibImgJ(B0_ss_MNI_img, JHU_B0_ss_imgJ, dataType=np.float32)
+        B0_ss_MNI_imgJ = MNIdePadding_imgJ(B0_ss_MNI_imgJ)
+        nib.save(B0_ss_MNI_imgJ, os.path.join(SubjDir, SubjID + '_b0_MNI.nii.gz'))
+        
+        ADC_ss_MNI_imgJ = get_new_NibImgJ(ADC_ss_MNI_img, JHU_B0_ss_imgJ, dataType=np.float32)
+        ADC_ss_MNI_imgJ = MNIdePadding_imgJ(ADC_ss_MNI_imgJ)
+        nib.save(ADC_ss_MNI_imgJ, os.path.join(SubjDir, SubjID + '_ADC_MNI.nii.gz'))
+        
+        Dwi_ss_MNI_norm_imgJ = get_new_NibImgJ(Dwi_ss_MNI_norm_img, JHU_B0_ss_imgJ, dataType=np.float32)
+        Dwi_ss_MNI_norm_imgJ = MNIdePadding_imgJ(Dwi_ss_MNI_norm_imgJ)
+        nib.save(Dwi_ss_MNI_norm_imgJ, os.path.join(SubjDir, SubjID + '_DWI_Norm_MNI.nii.gz'))
+        
+        LP_MNI_imgJ = get_new_NibImgJ(stroke_pred_img, JHU_B0_ss_imgJ, dataType=np.int16)
+        LP_MNI_imgJ = MNIdePadding_imgJ(LP_MNI_imgJ)
+        nib.save(LP_MNI_imgJ, os.path.join(SubjDir, SubjID + '_' + lesion_name + '_MNI.nii.gz'))
+
+    # Save lesion predict
+    LP_ImgJ = get_new_NibImgJ(stroke_pred_raw_img, Dwi_imgJ, dataType=np.int16)
+    nib.save(LP_ImgJ, os.path.join(SubjDir, SubjID + '_' + lesion_name + '.nii.gz'))
+    
+    if generate_report:
+        print('------ Generating lesion report ------')
+        gen_lesion_report(SubjDir, SubjID, stroke_pred_img, TemplateDir)
+        
+    if generate_result_png:
+        print('------ Generating result png file ------')
+        gen_result_png(SubjDir, lesion_name=lesion_name)
+        
+    print('------ Finish generating all results ------')
+    print('It takes %.2f seconds'% (time.time() - start_time))
+    
+def ASD(SubjDir,
+         model_name='DAGMNet_CH3',
+         level_iters = [3],
+         sigmas = [3.0],
+         factors = [2],
+         lesion_name='Lesion_Predict',
+         save_MNI=True,
+         generate_report=True,
+         generate_result_png=True
+        ):
+    
+    CodesDir, ProjectDir, TemplateDir, TrainedNetsDir = get_DirPaths()
+    SubjID = os.path.join(SubjDir,'').split('/')[-2]
+    MaskNet_name =  os.path.join(TrainedNetsDir, 'BrainMaskNet.h5')
+    Lesion_model_name = os.path.join(TrainedNetsDir, model_name+'.h5')
+    lesion_name = model_name + '_' + lesion_name
+    
+    if 'CH2' in model_name:
+        N_channel = 2
+    elif 'CH3' in model_name:
+        N_channel = 3
+        
+    ASD_pipeline(SubjDir,
+             SubjID,
+             TemplateDir=TemplateDir,
+             MaskNet_name = MaskNet_name,
+             Lesion_model_name = Lesion_model_name,
+             N_channel = N_channel,
+             level_iters = level_iters, 
+             sigmas = sigmas, 
+             factors = factors, 
+             lesion_name=lesion_name,
+             save_MNI=save_MNI,
+             generate_report=generate_report,
+             generate_result_png=generate_result_png
+            )
+    print('------ Process Done !!! ------')
