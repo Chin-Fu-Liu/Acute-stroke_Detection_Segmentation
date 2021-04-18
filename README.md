@@ -111,9 +111,13 @@ For detail description, run -h for help as following
 python ASDRun.py -h
 ```
 `-input ` is the path for  `SUBJECTID_FOLDER`
+
 `-model ` is the model name for segmenting lesions. It can be `DAGMNet_CH3`, `DAGMNet_CH2`, `UNet_CH3`, `UNet_CH2`, `FCN_CH3`, and `FCN_CH2`. They are pretrianed model by our data and specified in our paper [cite:]
+
 `-save_MNI` is used to specify whether to save images in MNI (DWI, b0, ADC, Normalized DWI and, lesion predict). It's True by default.  you can turn it off as `-save_MNI False`
+
 `-generate_report` is used to specify whether to generate lesion report. lesion report shows estimated lesion volume in total and in each vascular region or lobe area. It's True by default.  you can turn it off as `-generate_report False`
+
 `-generate_result_png` is used to specify whether to generate the lesion predict result in a png file. In the png file, the order of columns are DWI, b0, ADC, and DWI aligned with lesion predict (blue contour) in the original image space. It's True by default.  you can turn it off as `-generate_result_png False`
 
 For example, if you want to get a lesion predict on Subject01 with UNet_CH2 model, but not generating images in MNI and lesion report. You can run the following code in your virtual environment under the `Acute_Stroke_Detection/codes` folder.
