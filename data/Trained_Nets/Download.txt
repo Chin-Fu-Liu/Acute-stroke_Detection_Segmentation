@@ -1,0 +1,1 @@
+Please download all the trained networks from google drive listed in the README page. 
