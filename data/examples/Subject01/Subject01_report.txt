@@ -1,0 +1,74 @@
+Lesion volume (total) in mm3	 203717 
+
+Lesion volume in each vascular region (level 2)
+ACA	 5487 
+MCA	 35256 
+PCA	 4257 
+VB	 5 
+
+Lesion volume in each vascular region (level 1)
+ACAL	 3327 
+ACAR	 0 
+MCAL	 20854 
+MCAR	 194 
+PCAR	 1007 
+PCAL	 0 
+VBL	 5 
+VBR	 0 
+MCAL	 14208 
+MCAR	 0 
+ACAL	 2160 
+ACAR	 0 
+PCAL	 1595 
+PCAR	 0 
+VBL	 0 
+VBR	 0 
+PCAL	 1655 
+PCAR	 0 
+VBL	 0 
+VBR	 0 
+LVL	 2687 
+LVR	 0 
+MCAL	 22069 
+MCAR	 0 
+MCAL	 96794 
+MCAR	 0 
+MCAL	 18060 
+MCAR	 0 
+MCAL	 10472 
+MCAR	 0 
+PCAL	 1707 
+PCAR	 0 
+
+Lesion volume per area (level 1)
+frontal_L	 20589 
+frontal_R	 187 
+parietal_L	 17303 
+parietal_R	 0 
+temporal_L	 90163 
+temporal_R	 0 
+cingullum_L	 26 
+cingullum_R	 0 
+occipital_L	 18533 
+occipital_R	 0 
+insula_L	 12645 
+insula_R	 0 
+BasalGanglia_L	 4305 
+BasalGanglia_R	 0 
+Thalamus_L	 264 
+Thalamus_R	 0 
+cerebellum_L	 0 
+cerebellum_R	 0 
+pons	 0 
+medulla	 0 
+CSO_L	 8513 
+CSO_R	 0 
+CorRad_L	 4489 
+CorRad_R	 0 
+CorpusCallosum	 2382 
+IntCapsule_L	 5607 
+IntCapsule_R	 0 
+Ventricle_L	 2446 
+Ventricle_R	 0 
+IVventricle	 0 
+midbrain	 543 
