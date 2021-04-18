@@ -61,7 +61,7 @@ We highly recommend creating a virtual enviroment for using this software.
 From a bash shell, create a virtual environment in a folder (FOLDER_FOR_ENVS/ENVS_FOLDER_NAME) that you want.
 
 FOLDER_FOR_ENVS can be the path to the folder (`Acute_Stroke_Detection`) you create and clone from github or google drive.
-ENVS_FOLDER_NAME can be any name you like, like `ASD_ENV`
+ENVS_FOLDER_NAME can be any name you like, ex: `ASD_ENV`.
 
 Using Conda:
 ```
@@ -92,6 +92,16 @@ In the `Acute_Stroke_Detection/codes` folder, run
 python ASDRun.py -input $SUBJECT_FOLDER 
                  -model DAGMNet_CH3
 ```
+
+### The data format under `SUBJECT_FOLDER` folder
+`SUBJECT_FOLDER` should be the SubjectID, in our example folder, we put it like `Subject01` or `Subject02`.
+Each `SUBJECT_FOLDER` folder should contain DWI and b0 images whose naming is as following:
+
+`SubjectID_DWI.nii.gz`
+`SubjectID_b0.nii.gz`
+
+The naming is case sensitive.
+
 
 
 
