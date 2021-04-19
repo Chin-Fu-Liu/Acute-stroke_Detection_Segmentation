@@ -43,17 +43,17 @@ ${ROOT}
 
 ### STEP 1: Download ADS from github or google drive
 
-* From github: 
+* #### From github: 
     Cloned the codes (for unix system, similar steps should be sufficient for Windows) with :
     ```
     git clone https://github.com/Chin-Fu-Liu/Acute-stroke_Detection_Segmentation/
     ```
-    ### Download pre-trained networks :
+    Download pre-trained networks :
     1. Download pre-trained networks from [here (google drive) under uploading](https://drive.google.com/drive/)
     2. Unzip and put all the models ('MODEL_NAMES.h5' files) directly under `Trained_Nets` folder that is under your `Acute-stroke_Detection_Segmentation
     ` main folder.
     
-* From google drive: 
+* #### From google drive: 
     If you are not familiar with github, you can just download the whole ADS package (ADS.zip file) from google drive [here (google drive) under uploading](https://drive.google.com/drive/) and unzip it to create the `Acute-stroke_Detection_Segmentation` main folder locally.
 
 ### STEP 2: Create virtual environment and activate the virtual environment:
