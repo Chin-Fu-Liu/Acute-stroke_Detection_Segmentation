@@ -27,7 +27,7 @@ ${ROOT}
 ```
 
 * `data` contains data like templates, image examples, and trained networks.
-* `codes` contains ASD pipeline bin codes and the main function.
+* `codes` contains ADS pipeline bin codes and the main function.
 
 ## Installation and Requirements
 ### Required Dependencies 
@@ -122,7 +122,7 @@ The naming is case sensitive.
 
 
 
-### Options for ASDRun.py
+### Options for ADSRun.py
 
 For detail description, run -h for help as following
 ```
