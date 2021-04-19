@@ -131,13 +131,19 @@ python ASDRun.py -h
 
 `-model ` is the model name for segmenting lesions. It can be `DAGMNet_CH3`, `DAGMNet_CH2`, `UNet_CH3`, `UNet_CH2`, `FCN_CH3`, and `FCN_CH2`. They are pretrianed model by our data and specified in our paper [cite:]
 
-`-save_MNI` is used to specify whether to save images in MNI (DWI, b0, ADC, Normalized DWI and, lesion predict). It's True by default.  you can turn it off as `-save_MNI False`
+`-save_MNI`  is used to specify whether to save images in MNI space (DWI, b0, ADC, Normalized DWI and lesion predict). It's True by default. You can turn it off as `-save_MNI False`
 
-`-generate_report` is used to specify whether to generate lesion report. lesion report shows estimated lesion volume in total and in each vascular region or lobe area. It's True by default.  you can turn it off as `-generate_report False`
+`-generate_report`  is used to specify whether to generate the “lesion report”. The lesion report shows the total lesion volume as well as the estimated lesion volume per brain structure and per vascular territory (described in [cite] vascular atlas paper). Be aware that these values are calculated by linear mapping to MNI space, therefore they are unpredictably affected by the particular brain morphology. It's True by default. you can turn it off as `-generate_report False`
 
-`-generate_result_png` is used to specify whether to generate the lesion predict result in a png file. In the png file, the order of columns are DWI, b0, ADC, and DWI aligned with lesion predict (blue contour) in the original image space. It's True by default.  you can turn it off as `-generate_result_png False`
+`-generate_result_png` is used to specify whether to generate a figure (.png) of DWI, b0, ADC, and DWI aligned with lesion predict (blue contour) in the original image space. This figure is useful for immediate quality checking. It's True by default. You can turn it off as `-generate_result_png False`
 
-For example, if you want to get a lesion predict on Subject01 with UNet_CH2 model, but not generating images in MNI and lesion report. You can run the following code in your virtual environment under the `Acute_Stroke_Detection/codes` folder.
+For example, if you want to get a lesion predict on Subject01 with DAGMNet_CH3 model, as well as the images in MNI space, the lesion report, and the figure for quality control, you simply run the following line in your virtual environment under the `Acute_Stroke_Detection/codes` folder.
+
+```
+python ASDRun.py -input PATH_to_Subject01_FOLDER
+```
+
+if you want to get a lesion predict on Subject01 with UNet_CH2 model, but not generating images in MNI and lesion report, you can run the following code in your virtual environment under the `Acute_Stroke_Detection/codes` folder.
 
 ```
 python ASDRun.py -input PATH_to_Subject01_FOLDER 
@@ -146,8 +152,6 @@ python ASDRun.py -input PATH_to_Subject01_FOLDER
                  -generate_report False
                  -generate_result_png True
 ```
-
-
 
 ## News
 * 2021.04.16. examples are updated. 
