@@ -1,4 +1,4 @@
-# Acute-stroke_Detection_Segmentation
+# Acute-stroke_Detection_Segmentation (ADS)
 
 ## Introduction
 
