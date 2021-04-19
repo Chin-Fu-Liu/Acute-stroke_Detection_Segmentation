@@ -99,7 +99,7 @@ python ASDRun.py -input SUBJECTID_FOLDER
 
 #### The input format under `SUBJECTID_FOLDER` folder
 
-The input format is Nifti (.nii or .nii.gz). The user can convert to this format using any software / script (e.g., dcm2nii, MRICron, ImageJ).
+The input format is Nifti (.nii or .nii.gz). The user can convert to this format using any software/script (e.g., dcm2nii, MRICron, ImageJ).
 
 `SUBJECTID_FOLDER` should be named by its SubjectID, as in our example folder, we put it like `Subject01` or `Subject02`.
 Each `SUBJECTID_FOLDER` folder should at least contain DWI and b0 images. And the data storage structure and naming format should be as following:
