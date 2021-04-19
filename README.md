@@ -47,7 +47,7 @@ Cloned the codes (for unix system, similar steps should be sufficient for Window
 ```
 git clone https://github.com/Chin-Fu-Liu/Acute-stroke_Detection_Segmentation/
 ```
-If you are not familiar with github, you can just download the whole ASD package (ADS.zip file) from google drive [here (google drive) under uploading](https://drive.google.com/drive/) and unzip it to create the `Acute_Stroke_Detection` main folder locally.
+If you are not familiar with github, you can just download the whole ADS package (ADS.zip file) from google drive [here (google drive) under uploading](https://drive.google.com/drive/) and unzip it to create the `Acute-stroke_Detection_Segmentation` main folder locally.
 
 ### Download pre-trained networks :
 1. Download pre-trained networks from [here (google drive) under uploading](https://drive.google.com/drive/)
