@@ -8,8 +8,8 @@ We provide a tool for detection and segmentation of ischemic acute and sub-acute
     <img src="assets/Select2.gif", width="900" height="300">
 </p>
 <p align="middle">
-    <img src="assets/Subject01_slices.png", width="450" height="280">
-    <img src="assets/Subject02_slices.png", width="450" height="280">
+    <img src="assets/Subject01_slices.png", width="440" height="270">
+    <img src="assets/Subject02_slices.png", width="440" height="270">
 </p>
 
 
