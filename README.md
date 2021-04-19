@@ -39,7 +39,7 @@ ${ROOT}
 * scipy (version 1.4.1): For image operation/processing. 
 * dipy (version 1.4.0): For image registration
 * scikit-image (version 0.18.1): For image operation/processing. 
-* scikit-learn (version 0.24.1): Not necessary, but recommended to install as well, because we will update codes which has this dependency in the future. 
+* scikit-learn (version 0.24.1): Not necessary, but recommended because we will update codes with this dependency.
 
 ### STEP 1: Download ASD from github or google drive
 
@@ -76,7 +76,7 @@ source FOLDER_FOR_ENVS/ENVS_FOLDER_NAME/bin/activate
 
 ###  STEP 3: Install all Dependencies as follows 
 
-(use `pip install --user ` for local user)
+(Use `pip install --user ` for local user)
 ```
 $ pip install numpy nibabel scipy scikit-image scikit-learn
 $ pip install dipy==1.4.0
@@ -86,7 +86,7 @@ $ pip install tensorflow-gpu==2.0.0
 (We don't support GPU in this version, but it will be included in the next updated version. Hence, please also install `tensorflow-gpu`.)
 
 
-### STEP 4: How to get new predict
+### STEP 4: How to get the predicted stroke mask
 
 Navigate to to the `/Acute_Stroke_Detection/codes` folder, by `cd PATH_TO_/Acute_Stroke_Detection/codes/`
 
@@ -97,12 +97,18 @@ python ASDRun.py -input SUBJECTID_FOLDER
                  -model DAGMNet_CH3
 ```
 
-### The data format under `SUBJECTID_FOLDER` folder
-`SUBJECTID_FOLDER` should be named by its SubjectID, in our example folder, we put it like `Subject01` or `Subject02`.
+### The input format under `SUBJECTID_FOLDER` folder
+
+`SUBJECTID_FOLDER` should be named by its SubjectID, as in our example folder, we put it like `Subject01` or `Subject02`.
 Each `SUBJECTID_FOLDER` folder should contain DWI and b0 images whose naming is as following:
 
 `SubjectID_DWI.nii.gz`
 `SubjectID_b0.nii.gz`
+`SubjectID_ADC.nii.gz`
+
+The inputs are the DWI and the B0 MRIs. The ADC is optional. 
+If no ADC is provided, it will be calculated with the b-value provided by the user. 
+If no value is provided, the default b=1000 will be used. 
 
 The naming is case sensitive.
 
