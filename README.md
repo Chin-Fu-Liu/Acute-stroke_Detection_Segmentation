@@ -62,7 +62,7 @@ We highly recommend creating a virtual enviroment for using this software.
 From a bash shell, create a virtual environment in a folder (FOLDER_FOR_ENVS/ENVS_FOLDER_NAME) that you want.
 
 FOLDER_FOR_ENVS can be the path to the folder (`Acute-stroke_Detection_Segmentation`) you create and clone from github or google drive.
-ENVS_FOLDER_NAME can be any name you like, ex: `ASD_ENV`.
+ENVS_FOLDER_NAME can be any name you like, ex: `ADS_ENV`.
 
 Using Conda:
 ```
@@ -84,7 +84,7 @@ $ pip install dipy==1.4.0
 $ pip install tensorflow==2.0.0 
 $ pip install tensorflow-gpu==2.0.0
 ```
-(We don't support GPU in this version, but it will be included in the next updated version. Hence, please also install `tensorflow-gpu`.)
+(We don't support GPU in this version yet, but it will be included in the next updated version. Hence, please also install `tensorflow-gpu`.)
 
 
 ### STEP 4: How to get the predicted stroke mask
