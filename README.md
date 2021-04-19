@@ -7,8 +7,8 @@ In this study, we developed DL network ensembles for the detection and segmentat
     <img src="assets/Select2.gif", width="1000" height="220">
 </p>
 <p align="middle">
-    <img src="assets/Subject01_slices.png", width="500" height="300">
-    <img src="assets/Subject02_slices.png", width="500" height="300">
+    <img src="assets/Subject01_slices.png", width="500" height="220">
+    <img src="assets/Subject02_slices.png", width="500" height="220">
 </p>
 
 
