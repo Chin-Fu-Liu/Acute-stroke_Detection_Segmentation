@@ -141,13 +141,13 @@ python ADSRun.py -h
 For example, if you want to get a lesion predict on Subject01 with DAGMNet_CH3 model, as well as the images in MNI space, the lesion report, and the figure for quality control, you simply run the following line in your virtual environment under the `Acute_Stroke_Detection/codes` folder.
 
 ```
-python ADSRun.py -input PATH_TO_SubjectID_FOLDER
+python ADSRun.py -input PATH_TO_Subject01_FOLDER
 ```
 
 if you want to get a lesion predict on Subject01 with UNet_CH2 model, but not generating images in MNI and lesion report, you can run the following code in your virtual environment under the `Acute_Stroke_Detection/codes` folder.
 
 ```
-python ADSRun.py -input PATH_TO_SubjectID_FOLDER 
+python ADSRun.py -input PATH_TO_Subject01_FOLDER 
                  -model UNet_CH2
                  -save_MNI False
                  -generate_report False
