@@ -97,20 +97,26 @@ python ASDRun.py -input SUBJECTID_FOLDER
                  -model DAGMNet_CH3
 ```
 
-### The input format under `SUBJECTID_FOLDER` folder
+#### The input format under `SUBJECTID_FOLDER` folder
+
+The input format is Nifti (.nii or .nii.gz). The user can convert to this format using any software / script (e.g., dcm2nii, MRICron, ImageJ).
 
 `SUBJECTID_FOLDER` should be named by its SubjectID, as in our example folder, we put it like `Subject01` or `Subject02`.
-Each `SUBJECTID_FOLDER` folder should contain DWI and b0 images whose naming is as following:
+Each `SUBJECTID_FOLDER` folder should at least contain DWI and b0 images whose naming is as following:
 
 `SubjectID_DWI.nii.gz`
 `SubjectID_b0.nii.gz`
 `SubjectID_ADC.nii.gz`
 
-The inputs are the DWI and the B0 MRIs. The ADC is optional. 
+The mandatory inputs are the DWI and the B0 MRIs. The ADC is optional. 
 If no ADC is provided, it will be calculated with the b-value provided by the user. 
-If no value is provided, the default b=1000 will be used. 
-
+If no value is provided, the default b=1000 will be used to calculate ADC with given DWI and b0 MRIs. 
 The naming is case sensitive.
+
+The data has to follow the structure: 
+     SUBJECTID_FOLDER -> SUBJECTID_DWI.nii.gz
+                         SUBJECTID_b0.nii.gz
+
 
 ### Options for ASDRun.py
 
