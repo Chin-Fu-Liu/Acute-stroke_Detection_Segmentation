@@ -128,9 +128,9 @@ For detail description, run -h for help as following
 ```
 python ADSRun.py -h
 ```
-`-input ` is the path for  `SUBJECTID_FOLDER`
+`-input` is the path for  `SUBJECTID_FOLDER`
 
-`-model ` is the model name for segmenting lesions. It can be `DAGMNet_CH3`, `DAGMNet_CH2`, `UNet_CH3`, `UNet_CH2`, `FCN_CH3`, and `FCN_CH2`. They are pretrianed model by our data and specified in our paper [cite:]
+`-model` is the model name for segmenting lesions. It can be `DAGMNet_CH3`, `DAGMNet_CH2`, `UNet_CH3`, `UNet_CH2`, `FCN_CH3`, and `FCN_CH2`. They are pretrianed model by our data and specified in our paper [cite:]
 
 `-save_MNI`  is used to specify whether to save images in MNI space (DWI, b0, ADC, Normalized DWI and lesion predict). It's True by default. You can turn it off as `-save_MNI False`
 
@@ -153,6 +153,12 @@ python ADSRun.py -input PATH_TO_Subject01_FOLDER
                  -generate_report False
                  -generate_result_png True
 ```
+
+If you are not running the code under under the `Acute_Stroke_Detection/codes` folder, then you need to specify the path to `Acute_Stroke_Detection/codes` folder.
+```
+python PATHTO/Acute_Stroke_Detection/codes/ADSRun.py -input PATH_TO_Subject01_FOLDER
+```
+
 
 ## News
 * 2021.04.16. examples are updated. 
