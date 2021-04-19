@@ -87,11 +87,11 @@ $ pip install tensorflow-gpu==2.0.0
 
 ### STEP 4: How to get new predict
 
-Navigate to to the `/Acute_Stroke_Detection/codes` folder
+Navigate to to the `/Acute_Stroke_Detection/codes` folder, by `cd PATH_TO_/Acute_Stroke_Detection/codes/`
 
-In the `Acute_Stroke_Detection/codes` folder, run 
+Under the `Acute_Stroke_Detection/codes` folder, run 
 
-```bash
+```
 python ASDRun.py -input SUBJECTID_FOLDER 
                  -model DAGMNet_CH3
 ```
