@@ -41,17 +41,18 @@ ${ROOT}
 * scikit-image (version 0.18.1): For image operation/processing. 
 * scikit-learn (version 0.24.1): Not necessary, but recommended because we will update codes with this dependency.
 
-### STEP 1: Download ASD from github or google drive
+### STEP 1: Download ADS from github or google drive
 
 Cloned the codes (for unix system, similar steps should be sufficient for Windows) with :
 ```
-git clone https://github.com/Chin-Fu-Liu/Acute_Stroke_Detection/
+git clone https://github.com/Chin-Fu-Liu/Acute-stroke_Detection_Segmentation/
 ```
-If you are not familiar with github, you can just download the whole ASD package (ASD.zip file) from google drive [here (google drive) under uploading](https://drive.google.com/drive/) and unzip it to create the `Acute_Stroke_Detection` main folder locally.
+If you are not familiar with github, you can just download the whole ASD package (ADS.zip file) from google drive [here (google drive) under uploading](https://drive.google.com/drive/) and unzip it to create the `Acute_Stroke_Detection` main folder locally.
 
 ### Download pre-trained networks :
 1. Download pre-trained networks from [here (google drive) under uploading](https://drive.google.com/drive/)
-2. Unzip and put all the models ('MODEL_NAMES.h5' files) directly under `Trained_Nets` folder that is under your `Acute_Stroke_Detection` main folder.
+2. Unzip and put all the models ('MODEL_NAMES.h5' files) directly under `Trained_Nets` folder that is under your `Acute-stroke_Detection_Segmentation
+` main folder.
 
 
 ### STEP 2: Create virtual environment and activate the virtual environment:
@@ -60,7 +61,7 @@ We highly recommend creating a virtual enviroment for using this software.
 
 From a bash shell, create a virtual environment in a folder (FOLDER_FOR_ENVS/ENVS_FOLDER_NAME) that you want.
 
-FOLDER_FOR_ENVS can be the path to the folder (`Acute_Stroke_Detection`) you create and clone from github or google drive.
+FOLDER_FOR_ENVS can be the path to the folder (`Acute-stroke_Detection_Segmentation`) you create and clone from github or google drive.
 ENVS_FOLDER_NAME can be any name you like, ex: `ASD_ENV`.
 
 Using Conda:
@@ -88,12 +89,12 @@ $ pip install tensorflow-gpu==2.0.0
 
 ### STEP 4: How to get the predicted stroke mask
 
-Navigate to to the `/Acute_Stroke_Detection/codes` folder, by `cd PATH_TO_/Acute_Stroke_Detection/codes/`
+Navigate to to the `/Acute-stroke_Detection_Segmentation/codes` folder, by `cd PATH_TO_/Acute_Stroke_Detection/codes/`
 
-Under the `Acute_Stroke_Detection/codes` folder, run 
+Under the `Acute-stroke_Detection_Segmentation/codes` folder, run 
 
 ```
-python ASDRun.py -input SUBJECTID_FOLDER 
+python ADSRun.py -input SUBJECTID_FOLDER 
                  -model DAGMNet_CH3
 ```
 
@@ -125,7 +126,7 @@ The naming is case sensitive.
 
 For detail description, run -h for help as following
 ```
-python ASDRun.py -h
+python ADSRun.py -h
 ```
 `-input ` is the path for  `SUBJECTID_FOLDER`
 
@@ -140,13 +141,13 @@ python ASDRun.py -h
 For example, if you want to get a lesion predict on Subject01 with DAGMNet_CH3 model, as well as the images in MNI space, the lesion report, and the figure for quality control, you simply run the following line in your virtual environment under the `Acute_Stroke_Detection/codes` folder.
 
 ```
-python ASDRun.py -input PATH_to_Subject01_FOLDER
+python ADSRun.py -input PATH_to_Subject01_FOLDER
 ```
 
 if you want to get a lesion predict on Subject01 with UNet_CH2 model, but not generating images in MNI and lesion report, you can run the following code in your virtual environment under the `Acute_Stroke_Detection/codes` folder.
 
 ```
-python ASDRun.py -input PATH_to_Subject01_FOLDER 
+python ADSRun.py -input PATH_to_Subject01_FOLDER 
                  -model UNet_CH2
                  -save_MNI False
                  -generate_report False
