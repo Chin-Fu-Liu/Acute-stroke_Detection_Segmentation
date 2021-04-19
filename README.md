@@ -73,7 +73,7 @@ virtualenv -p python3 FOLDER_FOR_ENVS/ENVS_FOLDER_NAME     # Use python up to 3.
 source FOLDER_FOR_ENVS/ENVS_FOLDER_NAME/bin/activate      
 ```
 
-###  STEP 3: Install all Dependencies as follows
+###  STEP 3: Install all Dependencies as follows (use `pip install --user ` for local user)
 ```
 $ pip install numpy nibabel scipy scikit-image scikit-learn
 $ pip install dipy==1.4.0
