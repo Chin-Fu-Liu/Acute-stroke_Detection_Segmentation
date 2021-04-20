@@ -94,7 +94,7 @@ Navigate to to the `/Acute-stroke_Detection_Segmentation/codes` folder, by `cd P
 Under the `Acute-stroke_Detection_Segmentation/codes` folder, run 
 
 ```
-python ADSRun.py -input SUBJECTID_FOLDER 
+python ADSRun.py -input PATH_TO/SUBJECTID_FOLDER 
                  -model DAGMNet_CH3
 ```
 
