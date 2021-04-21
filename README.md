@@ -2,7 +2,7 @@
 
 ## Introduction
 
-We provide a tool for detection and segmentation of ischemic acute and sub-acute strokes in brain diffusion weighted MRIs (DWIs). The deep learning networks were trained and tested on a large dataset of 2,348 clinical images, and further tested on 280 images of an external dataset. Our proposed model outperformed generic nets and patch-wise approaches, particularly in small lesions, with lower false positive rate, balanced precision and sensitivity, and robustness to data perturbs (e.g., artefacts, low resolution, technical heterogeneity). The agreement with human delineation rivaled the inter-evaluator agreement; the automated lesion quantification (e.g., volume) had virtually total agreement with human quantification. The method has minimal computational requirements, the lesion inference is fast (inference takes 20~30 seconds in CPU, and total processing including registration and generating results/report take ~ 2.5 mins) and provided with a single command line. We output the predicted lesion mask in the original space and in standard space, MNI (in addition to the inputs: DWI, ADC, B0) as well as the quantification of the lesion per brain structure and per vascular territory.
+We provide a tool for detection and segmentation of ischemic acute and sub-acute strokes in brain diffusion weighted MRIs (DWIs). The deep learning networks were trained and tested on a large dataset of 2,348 clinical images, and further tested on 280 images of an external dataset. Our proposed model outperformed generic nets and patch-wise approaches, particularly in small lesions, with lower false positive rate, balanced precision and sensitivity, and robustness to data perturbs (e.g., artefacts, low resolution, technical heterogeneity). The agreement with human delineation rivaled the inter-evaluator agreement; the automated lesion quantification (e.g., volume) had virtually total agreement with human quantification. The method has minimal computational requirements and is fast: the lesion inference takes 20~30 seconds in CPU and the total processing, including registration and generation of results/report takes ~ 2.5 mins. The outputs, provided with a single command line, are: the predicted lesion mask, the lesion mask and the image inputs (DWI, B0, ADC) in standard space, MNI, and the quantification of the lesion per brain structure and per vascular territory.
 
 <p align="middle">
     <img src="assets/Select2.gif", width="800" height="250">
@@ -98,12 +98,11 @@ python ADSRun.py -input PATH_TO/SUBJECTID_FOLDER
                  -model DAGMNet_CH3
 ```
 
-#### The input format under `SUBJECTID_FOLDER` folder
+#### The input format under `SUBJECTID_FOLDER`
 
-The input format is Nifti (.nii or .nii.gz). The user can convert to this format using any software/script (e.g., dcm2nii, MRICron, ImageJ).
+The input images must be in Nifti format (.nii or .nii.gz). You can convert to Nifti using any available software/script (e.g., dcm2nii, MRICron, ImageJ).
 
-`SUBJECTID_FOLDER` should be named by its SubjectID, as in our example folder, we put it like `Subject01` or `Subject02`.
-Each `SUBJECTID_FOLDER` folder should at least contain DWI and b0 images. And the data storage structure and naming format should be as following:
+`SUBJECTID_FOLDER` should be named by its SubjectID (see our example under "data/examples"). The data storage structure and naming must be as follows:
 
     |-- SUBJECTID_FOLDER
         |-- SUBJECTID_DWI.nii.gz
@@ -111,13 +110,7 @@ Each `SUBJECTID_FOLDER` folder should at least contain DWI and b0 images. And th
         |-- SUBJECTID_ADC.nii.gz (optional)
 
 
-The mandatory inputs are the DWI and the B0 MRIs. The ADC is optional. 
-
-If no ADC is provided, it will be calculated with the b-value provided by the user. 
-
-If no value is provided, the default b=1000 will be used to calculate ADC with given DWI and b0 MRIs. 
-
-The naming is case sensitive.
+The mandatory inputs are DWI and B0; ADC is optional. If no ADC is provided, it will be calculated with the b-value provided by the user. If no b-value is provided, it will use the default, b=1000. The naming is case sensitive.
 
 
 
@@ -130,13 +123,13 @@ python ADSRun.py -h
 ```
 `-input` is the path for  `SUBJECTID_FOLDER`
 
-`-model` is the model name for segmenting lesions. It can be `DAGMNet_CH3`, `DAGMNet_CH2`, `UNet_CH3`, `UNet_CH2`, `FCN_CH3`, and `FCN_CH2`. They are pretrianed model by our data and specified in our paper [cite:]
+`-model` is the model name for segmenting lesions. It can be `DAGMNet_CH3`, `DAGMNet_CH2`, `UNet_CH3`, `UNet_CH2`, `FCN_CH3`, and `FCN_CH2`. These models were pretrianed by our data, as reported in our paper [cite:]
 
 `-save_MNI`  is used to specify whether to save images in MNI space (DWI, b0, ADC, Normalized DWI and lesion predict). It's True by default. You can turn it off as `-save_MNI False`
 
-`-generate_report`  is used to specify whether to generate the “lesion report”. The lesion report shows the total lesion volume as well as the estimated lesion volume per brain structure and per vascular territory (described in [cite] vascular atlas paper). Be aware that these values are calculated by linear mapping to MNI space, therefore they are unpredictably affected by the particular brain morphology. It's True by default. you can turn it off as `-generate_report False`
+`-generate_report`  is used to specify whether to generate the “lesion report”. The lesion report shows the total lesion volume as well as the estimated lesion volume per brain structure and per vascular territory. For descriptions of these territories and the eletronic version of the atlases, see [cite]. The total volume of each area is listed in "volume_brain_regions.txt", included in the ADS package, so the users can calculate the relative distribution of the lesions. Be aware that these values are calculated by linear mapping to MNI space, therefore they are unpredictably affected by the particular brain morphology. The option to generte reports is True by default. You can turn it off as `-generate_report False`
 
-`-generate_result_png` is used to specify whether to generate a figure (.png) of DWI, b0, ADC, and DWI aligned with lesion predict (blue contour) in the original image space. This figure is useful for immediate quality checking. It's True by default. You can turn it off as `-generate_result_png False`
+`-generate_result_png` is used to specify whether to generate a figure (.png) of DWI, b0, ADC, and DWI aligned with lesion predict (blue contour) in the original image space. This figure is useful for immediate quality checking. This option is True by default. You can turn it off as `-generate_result_png False`
 
 For example, if you want to get a lesion predict on Subject01 with DAGMNet_CH3 model, as well as the images in MNI space, the lesion report, and the figure for quality control, you simply run the following line in your virtual environment under the `Acute_Stroke_Detection/codes` folder.
 
@@ -154,7 +147,7 @@ python ADSRun.py -input PATH_TO_Subject01_FOLDER
                  -generate_result_png True
 ```
 
-If you are not running the code under under the `Acute_Stroke_Detection/codes` folder, then you need to specify the path to `Acute_Stroke_Detection/codes` folder.
+If you are not running the code under under the `Acute_Stroke_Detection/codes` folder, then you need to specify the path to `Acute_Stroke_Detection/codes` folder, as follows:
 ```
 python PATHTO/Acute_Stroke_Detection/codes/ADSRun.py -input PATH_TO_Subject01_FOLDER
 ```
