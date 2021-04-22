@@ -129,13 +129,13 @@ python ADSRun.py -h
 
 `-model` is the model name for segmenting lesions. It can be `DAGMNet_CH3`, `DAGMNet_CH2`, `UNet_CH3`, `UNet_CH2`, `FCN_CH3`, and `FCN_CH2`. These models were pretrianed by our data, as reported in our paper [cite:]
 
-`-bvalue` is used to specify the b-value to calculate ADC, if ADC is not given. It's 1000 by default. If ADC is given under subjectID folder, this option will be ignored.
+`-bvalue` is used to specify the b-value to calculate ADC, if ADC is not given.  If ADC is given under `SUBJECTID_FOLDER`, this option will be ignored. `(defaut: 1000)`
 
-`-save_MNI`  is used to specify whether to save images in MNI space (DWI, b0, ADC, Normalized DWI and lesion predict). It's True by default. You can turn it off as `-save_MNI False`
+`-save_MNI`  is used to specify whether to save images in MNI space (DWI, b0, ADC, Normalized DWI and lesion predict). You can turn it off as `-save_MNI False`. `(defaut: True)`
 
-`-generate_report`  is used to specify whether to generate the “lesion report”. The lesion report shows the total lesion volume as well as the estimated lesion volume per brain structure and per vascular territory. For descriptions of these territories and the eletronic version of the atlases, see [cite]. The total volume of each area is listed in "volume_brain_regions.txt", included in the ADS package, so the users can calculate the relative distribution of the lesions. Be aware that these values are calculated by linear mapping to MNI space, therefore they are unpredictably affected by the particular brain morphology. The option to generte reports is True by default. You can turn it off as `-generate_report False`
+`-generate_report`  is used to specify whether to generate the “lesion report”. The lesion report shows the total lesion volume as well as the estimated lesion volume per brain structure and per vascular territory. For descriptions of these territories and the eletronic version of the atlases, see [cite]. The total volume of each area is listed in "volume_brain_regions.txt", included in the ADS package, so the users can calculate the relative distribution of the lesions. Be aware that these values are calculated by linear mapping to MNI space, therefore they are unpredictably affected by the particular brain morphology. You can turn it off as `-generate_report False`. `(defaut: True)`
 
-`-generate_result_png` is used to specify whether to generate a figure (.png) of DWI, b0, ADC, and DWI aligned with lesion predict (blue contour) in the original image space. This figure is useful for immediate quality checking. This option is True by default. You can turn it off as `-generate_result_png False`
+`-generate_result_png` is used to specify whether to generate a figure (.png) of DWI, b0, ADC, and DWI aligned with lesion predict (blue contour) in the original image space. This figure is useful for immediate quality checking. You can turn it off as `-generate_result_png False`. `(defaut: True)`
 
 For example, if you want to get a lesion predict on Subject01 with DAGMNet_CH3 model, as well as the images in MNI space, the lesion report, and the figure for quality control, you simply run the following line in your virtual environment under the `Acute_Stroke_Detection/codes` folder.
 
