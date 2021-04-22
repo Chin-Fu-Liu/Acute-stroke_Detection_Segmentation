@@ -127,8 +127,7 @@ python ADSRun.py -h
 ```
 `-input` is the path for  `SUBJECTID_FOLDER`
 
-`-model` is the model name for segmenting lesions. It can be `DAGMNet_CH3`, `DAGMNet_CH2`, `UNet_CH3`, `UNet_CH2`, `FCN_CH3`, and `FCN_CH2`. `(defaut: DAGMNet_CH3)`
-These models were pretrianed by our data, as reported in our paper [cite:] 
+`-model` is the model name for segmenting lesions. It can be `DAGMNet_CH3`, `DAGMNet_CH2`, `UNet_CH3`, `UNet_CH2`, `FCN_CH3`, and `FCN_CH2`. These models were pretrianed by our data, as reported in our paper [cite:] `(defaut: DAGMNet_CH3)`
 
 `-bvalue` is used to specify the b-value to calculate ADC, if ADC is not given.  If ADC is given under `SUBJECTID_FOLDER`, this option will be ignored. `(defaut: 1000)`
 
