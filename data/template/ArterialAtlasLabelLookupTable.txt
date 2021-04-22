@@ -1,0 +1,33 @@
+Intensity	Level1	Level2	level2_bilateral	major_territory	Level1_name
+1	ACAL	ACAL	ACA	Anterior	anterior cerebral artery left
+2	ACAR	ACAR	ACA	Anterior	anterior cerebral artery right
+3	MCAFL	MCAL	MCA	Anterior	frontal pars of middle cerebral artery left
+4	MCAFR	MCAR	MCA	Anterior	frontal pars of middle cerebral artery right
+5	PCATL	PCAR	PCA	Posterior	temporal pars of posterior cerebral artery left
+6	PCATR	PCAL	PCA	Posterior	temporal pars of posterior cerebral artery right
+7	BasilarL	VBL	VB	Posterior	basilar left
+8	BasilarR	VBR	VB	Posterior	basilar right
+9	LatLenticulostriateL	MCAL	MCA	Anterior	lateral lenticulostriate left
+10	LatLenticulostriateR	MCAR	MCA	Anterior	lateral lenticulostriate right
+11	MedLenticulostriateL	ACAL	ACA	Anterior	medial lenticulostriate left
+12	MedLenticulostriateR	ACAR	ACA	Anterior	medial lenticulostriate right
+13	PostChor&ThalPerfL	PCAL	PCA	Posterior	posterior choroidal and thalamoperfurators left
+14	PostChor&ThalPerfR	PCAR	PCA	Posterior	posterior choroidal and thalamoperfurators right
+15	InfCerebellarL	VBL	VB	Posterior	inferior cerebellar left
+16	InfCerebellarR	VBR	VB	Posterior	inferior cerebellar right
+17	AntChor&ThalPerfL	PCAL	PCA	Posterior	anteior choroidal and thalamoperfurators left
+18	AntChor&ThalPerfR	PCAR	PCA	Posterior	anterior choroidal and thalamoperfurators right
+19	SupCerebellarL	VBL	VB	Posterior	superior cerebellar left
+20	SupCerebellarR	VBR	VB	Posterior	superior cerebellar right
+21	LVR	LVR	LV	Ventricle	lateral ventricle left
+22	LVL	LVR	LV	Ventricle	lateral ventricle right
+23	MCAPL	MCAL	MCA	Anterior	parietal pars of middle cerebral artery left
+24	MCAPL	MCAR	MCA	Anterior	parietal pars of middle cerebral artery right
+25	MCATL	MCAL	MCA	Anterior	temporal pars of middle cerebral artery left
+26	MCATL	MCAR	MCA	Anterior	temporal pars of middle cerebral artery right
+27	MCAOL	MCAL	MCA	Anterior	occipital pars of middle cerebral artery left
+28	MCAOL	MCAR	MCA	Anterior	occipital pars of middle cerebral artery right
+29	MCAIL	MCAL	MCA	Anterior	insular pars of middle cerebral artery left
+30	MCAIL	MCAR	MCA	Anterior	insular pars of middle cerebral artery right
+31	PCAOL	PCAL	PCA	Posterior	occipital pars of posterior cerebral artery left
+32	PCAOR	PCAR	PCA	Posterior	occipital pars of posterior cerebral artery right
