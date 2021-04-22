@@ -34,7 +34,7 @@ ${ROOT}
 
 * python (version 3.7.7): Please make sure the version is at least 3.6+
 * tensorFlow (version 2.0.0): The Deep Learning networks library for backend.
-* h5py (version 2.10.0) : The networks model storage library. (please make sure it's 2.10.0. Any different version might generate unexpected error when loading our pretrained models.) 
+* h5py (version 2.10.0) : The networks model storage library. (please make sure its version is 2.10.0. Any different version might generate unexpected error when loading our pretrained models.) 
 * niBabel (version 3.2.1): For loading NIFTI files.
 * numpy (version 1.19.5): Gerenal computing array processing library.
 * scipy (version 1.4.1): For image operation/processing. 
