@@ -34,6 +34,7 @@ ${ROOT}
 
 * python (version 3.7.7): Please make sure the version is at least 3.6+
 * tensorFlow (version 2.0.0): The Deep Learning networks library for backend.
+* h5py (version 2.10.0) : The networks model storage library. (please make sure it's 2.10.0. Any different version might generate unexpected error when loading our pretrained models.) 
 * niBabel (version 3.2.1): For loading NIFTI files.
 * numpy (version 1.19.5): Gerenal computing array processing library.
 * scipy (version 1.4.1): For image operation/processing. 
@@ -83,6 +84,7 @@ $ pip install numpy nibabel scipy scikit-image scikit-learn
 $ pip install dipy==1.4.0
 $ pip install tensorflow==2.0.0 
 $ pip install tensorflow-gpu==2.0.0
+$ pip install h5py==2.10.0
 ```
 (We don't support GPU in this version yet, but it will be included in the next updated version. Hence, please also install `tensorflow-gpu`.)
 
@@ -110,8 +112,10 @@ The input images must be in Nifti format (.nii or .nii.gz). You can convert to N
         |-- SUBJECTID_ADC.nii.gz (optional)
 
 
-The mandatory inputs are DWI and B0; ADC is optional. If no ADC is provided, it will be calculated with the b-value provided by the user. If no b-value is provided, it will use the default, b=1000. The naming is case sensitive.
+The mandatory inputs are DWI and B0; ADC is optional. If no ADC is provided, it will be calculated with the b-value provided by the user (see option `-bvalue`). If no b-value is provided, it will use the default, b=1000. 
 
+
+##### Note: The naming of input images is case sensitive.
 
 
 
@@ -124,6 +128,8 @@ python ADSRun.py -h
 `-input` is the path for  `SUBJECTID_FOLDER`
 
 `-model` is the model name for segmenting lesions. It can be `DAGMNet_CH3`, `DAGMNet_CH2`, `UNet_CH3`, `UNet_CH2`, `FCN_CH3`, and `FCN_CH2`. These models were pretrianed by our data, as reported in our paper [cite:]
+
+`-bvalue` is used to specify the b-value to calculate ADC, if ADC is not given. It's 1000 by default. If ADC is given under subjectID folder, this option will be ignored.
 
 `-save_MNI`  is used to specify whether to save images in MNI space (DWI, b0, ADC, Normalized DWI and lesion predict). It's True by default. You can turn it off as `-save_MNI False`
 
