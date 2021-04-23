@@ -1,0 +1,74 @@
+ICV	203811 approximate intracranial volume (mm3)
+
+vascular territory	volume
+ACAL	3155	anterior cerebral artery left
+ACAR	0	anterior cerebral artery right
+MLSL	2306	medial lenticulostriate left
+MLSR	0	medial lenticulostriate right
+LLSL	15144	lateral lenticulostriate left
+LLSR	0	lateral lenticulostriate right
+MCAFL	17362	frontal pars of middle cerebral artery left
+MCAFR	200	frontal pars of middle cerebral artery right
+MCAPL	19093	parietal pars of middle cerebral artery left
+MCAPL	0	parietal pars of middle cerebral artery right
+MCATL	98184	temporal pars of middle cerebral artery left
+MCATL	0	temporal pars of middle cerebral artery right
+MCAOL	19527	occipital pars of middle cerebral artery left
+MCAOL	0	occipital pars of middle cerebral artery right
+MCAIL	10466	insular pars of middle cerebral artery left
+MCAIL	0	insular pars of middle cerebral artery right
+PCATL	1973	temporal pars of posterior cerebral artery left
+PCATR	0	temporal pars of posterior cerebral artery right
+PCAOL	2507	occipital pars of posterior cerebral artery left
+PCAOR	0	occipital pars of posterior cerebral artery right
+PCTPL	2457	posterior choroidal and thalamoperfurators left
+PCTPR	0	posterior choroidal and thalamoperfurators right
+ACTPL	2511	anteior choroidal and thalamoperfurators left
+ACTPR	0	anterior choroidal and thalamoperfurators right
+BL	32	basilar left
+BR	0	basilar right
+SCL	0	superior cerebellar left
+SCR	0	superior cerebellar right
+ICL	0	inferior cerebellar left
+ICR	0	inferior cerebellar right
+LVL	3439	lateral ventricle left
+LVR	0	lateral ventricle right
+
+vascular territory 2	volume
+ACA	3155	
+MCA	0	
+PCA	2306	
+VB	0	
+
+area	volume
+frontal_L	20607	
+frontal_R	192	
+parietal_L	17317	
+parietal_R	0	
+temporal_L	90175	
+temporal_R	0	
+cingullum_L	26	
+cingullum_R	0	
+occipital_L	18538	
+occipital_R	0	
+insula_L	12645	
+insula_R	0	
+BasalGanglia_L	4310	
+BasalGanglia_R	0	
+Thalamus_L	264	
+Thalamus_R	0	
+cerebellum_L	0	
+cerebellum_R	0	
+pons	0	
+medulla	0	
+CoronaRadiata_L	8513	
+CoronaRadiata_R	0	
+CentrumSemiOvale_L	4490	
+CentrumSemiOvale_R	0	
+CorpusCallosum	2390	
+InternalCapsule_L	5612	
+InternalCapsule_R	0	
+Ventricle_L	2449	
+Ventricle_R	0	
+IVventricle	0	
+midbrain	543	
