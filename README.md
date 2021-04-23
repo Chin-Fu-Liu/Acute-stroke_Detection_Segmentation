@@ -160,7 +160,7 @@ python PATHTO/Acute_Stroke_Detection/codes/ADSRun.py -input PATH_TO_Subject01_FO
 
 
 ## News
-* 2021.04.16. examples are updated. 
+* 2021.04.22. ADSv0.0 was uploaded.
 
 
 ## Reference  
