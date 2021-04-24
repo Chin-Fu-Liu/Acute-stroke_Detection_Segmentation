@@ -13,6 +13,7 @@ OPT_MODEL = "-model"
 OPT_INPUTFOLDER = "-input"
 OPT_BVALUE = "-bvalue"
 OPT_SAVEMNI = "-save_MNI"
+OPT_GENMASK = "-generate_brainmask"
 OPT_GENREPORT = "-generate_report"
 OPT_GENRESULTPNG = "-generate_result_png"
 
@@ -34,6 +35,9 @@ def get_arg_parser():
     
     parser.add_argument(OPT_SAVEMNI, dest='save_MNI', type=bool, default=True,
                         help='For saving all images in MNI, please set this option as True, otherwise set it as False. (default: True)')
+
+    parser.add_argument(OPT_GENMASK, dest='generate_brainmask', type=bool, default=False,
+                        help='For generating brain mask, please set this option as True, otherwise set it as False. (default: False)')
     
     parser.add_argument(OPT_GENREPORT, dest='generate_report', type=bool, default=True,
                         help='For generating lesion report in txt, please set this option as True, otherwise set it as False. (default: True)')
@@ -49,6 +53,7 @@ def main(args):
     model_name = args.model
     bvalue = args.bvalue
     save_MNI = args.save_MNI
+    generate_brainmask = args.generate_brainmask
     generate_report = args.generate_report
     generate_result_png = args.generate_result_png,
     
@@ -60,6 +65,7 @@ def main(args):
 #          lesion_name='Lesion_Predict'
          bvalue = bvalue,
          save_MNI=save_MNI,
+         generate_brainmask=generate_brainmask,
          generate_report=generate_report,
          generate_result_png=generate_result_png
         )

@@ -483,6 +483,7 @@ def ADS_pipeline(SubjDir,
                  lesion_name='Lesion_Predict',
                  bvalue = 1000,
                  save_MNI=True, 
+                 generate_brainmask=False,
                  generate_report=True,
                  generate_result_png=True
                 ):
@@ -559,6 +560,10 @@ def ADS_pipeline(SubjDir,
     print('------ Inferencing brain mask------')
     mask_MNI_img = get_MaskNet_MNI(MaskNet, Dwi_MNI_img, B0_MNI_img)
     mask_raw_img = affine_map.transform_inverse((mask_MNI_img>0.5)*1, interpolation='nearest')
+    mask_raw_img = (mask_raw_img>0.5)*1.0
+    if generate_brainmask:
+        mask_raw_ImgJ = get_new_NibImgJ(mask_raw_img, Dwi_imgJ, dataType=np.int16)
+        nib.save(mask_raw_ImgJ, os.path.join(SubjDir, SubjID + '_Mask.nii.gz'))
     
     print('------ Finished inferencing brain mask------')
     print('It takes %.2f seconds'% (time.time() - start_time))
@@ -589,7 +594,7 @@ def ADS_pipeline(SubjDir,
     Dwi_ss_MNI_img = affine_map.transform(Dwi_ss_img)
     ADC_ss_MNI_img = affine_map.transform(ADC_ss_img)
     mask_raw_MNI_img = affine_map.transform(mask_raw_img, interpolation='nearest') 
-    
+    mask_raw_MNI_img = (mask_raw_MNI_img>0.5)*1.0
     
         
     print('------ Mapping to MNI without skull for lesion detection model ------')
@@ -642,7 +647,7 @@ def ADS_pipeline(SubjDir,
     start_time = time.time()
  
     # Save lesion predict
-    LP_ImgJ = get_new_NibImgJ(stroke_pred_raw_img, Dwi_imgJ, dataType=np.int16)
+    LP_ImgJ = get_new_NibImgJ(stroke_pred_raw_img, Dwi_imgJ, dataType=np.float32)
     nib.save(LP_ImgJ, os.path.join(SubjDir, SubjID + '_' + lesion_name + '.nii.gz'))
 
     # save images in MNI
@@ -667,10 +672,16 @@ def ADS_pipeline(SubjDir,
         LP_MNI_imgJ = get_new_NibImgJ(stroke_pred_img, JHU_B0_ss_imgJ, dataType=np.int16)
         LP_MNI_imgJ = MNIdePadding_imgJ(LP_MNI_imgJ)
         nib.save(LP_MNI_imgJ, os.path.join(SubjDir, SubjID + '_' + lesion_name + '_MNI.nii.gz'))
-    
+        
+        if generate_brainmask:
+            mask_raw_MNI_img = (mask_raw_MNI_img>0.5)*1.0
+            mask_raw_MNI_ImgJ = get_new_NibImgJ(mask_raw_MNI_img, JHU_B0_ss_imgJ, dataType=np.float32)
+            mask_raw_MNI_ImgJ = MNIdePadding_imgJ(mask_raw_MNI_ImgJ)
+            nib.save(mask_raw_MNI_ImgJ, os.path.join(SubjDir, SubjID + '_Mask_MNI.nii.gz'))
+
     if generate_report:
         print('------ Generating lesion report ------')
-        ICV_vol = VolSpacing * np.sum((mask_raw_MNI_img>0.5)*1.0)
+        ICV_vol = VolSpacing * np.sum((mask_raw_img>0.5)*1.0)
         Lesion_vol = VolSpacing * np.sum((stroke_pred_raw_img>0.5)*1.0)
         gen_lesion_report(SubjDir, SubjID, stroke_pred_img, ICV_vol, Lesion_vol, TemplateDir)
         
@@ -689,6 +700,7 @@ def ADS(SubjDir,
          lesion_name='Lesion_Predict',
          bvalue = 1000,
          save_MNI=True,
+         generate_brainmask=False,
          generate_report=True,
          generate_result_png=True
         ):
@@ -716,6 +728,7 @@ def ADS(SubjDir,
              lesion_name=lesion_name,
              bvalue = bvalue,
              save_MNI=save_MNI,
+             generate_brainmask=generate_brainmask,
              generate_report=generate_report,
              generate_result_png=generate_result_png
             )
