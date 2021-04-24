@@ -133,7 +133,7 @@ python ADSRun.py -h
 
 `-save_MNI`  is used to specify whether to save images in MNI space (DWI, b0, ADC, Normalized DWI and lesion predict). You can turn it off as `-save_MNI False`. `(defaut: True)`
 
-`-generate_brainmask` is used to specify whether to generate brain mask in raw space, brain mask in MNI will be generated with `-save_MNI`being True. You can turn it on as `-save_MNI True`. `(defaut: False)`
+`-generate_brainmask` is used to specify whether to generate brain mask in raw space, brain mask in MNI will be generated if `-save_MNI` is True. You can turn it on as `-save_MNI True`. `(defaut: False)`
 
 `-generate_report`  is used to specify whether to generate the “lesion report”. The lesion report shows the total lesion volume as well as the estimated lesion volume per brain structure and per vascular territory. For descriptions of these territories and the eletronic version of the atlases, see [cite]. The total volume of each area is listed in "volume_brain_regions.txt", included in the ADS package, so the users can calculate the relative distribution of the lesions. Be aware that these values are calculated by linear mapping to MNI space, therefore they are unpredictably affected by the particular brain morphology. You can turn it off as `-generate_report False`. `(defaut: True)`
 
