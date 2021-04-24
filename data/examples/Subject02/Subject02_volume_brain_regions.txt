@@ -1,4 +1,4 @@
-intracranial volume 	14214787
+intracranial volume 	1312425
 
 stroke volume 	222
 
