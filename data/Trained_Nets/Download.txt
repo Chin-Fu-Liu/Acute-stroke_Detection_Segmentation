@@ -1,1 +1,8 @@
+# Copyright (c) 2021, Andreia V. Faria, Chin-Fu Liu
+# All rights reserved.
+#
+# This program is free software; 
+# you can redistribute it and/or modify it under the terms of the GNU General Public License v3.0. 
+# See the LICENSE file or read the terms at https://www.gnu.org/licenses/gpl-3.0.en.html.
+
 Please download all the trained networks from google drive listed in the README page. 
