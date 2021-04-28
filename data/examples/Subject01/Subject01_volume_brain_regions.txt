@@ -1,6 +1,6 @@
 intracranial volume 	1570820
 
-stroke volume 	165190
+stroke volume 	165194
 
 vascular territory	number of voxel
 ACAL	3155	anterior cerebral artery left
@@ -23,7 +23,7 @@ PCATL	1973	temporal pars of posterior cerebral artery left
 PCATR	0	temporal pars of posterior cerebral artery right
 PCAOL	2507	occipital pars of posterior cerebral artery left
 PCAOR	0	occipital pars of posterior cerebral artery right
-PCTPL	2457	posterior choroidal and thalamoperfurators left
+PCTPL	2458	posterior choroidal and thalamoperfurators left
 PCTPR	0	posterior choroidal and thalamoperfurators right
 ACTPL	2511	anteior choroidal and thalamoperfurators left
 ACTPR	0	anterior choroidal and thalamoperfurators right
@@ -57,7 +57,7 @@ insula_L	12645
 insula_R	0	
 BasalGanglia_L	4310	
 BasalGanglia_R	0	
-Thalamus_L	264	
+Thalamus_L	265	
 Thalamus_R	0	
 cerebellum_L	0	
 cerebellum_R	0	
