@@ -1,0 +1,74 @@
+ICV	1916974	approximate intracranial volume (mm3)
+		
+vascular territory	volume	
+ACAL	147935	anterior cerebral artery left
+ACAR	148195	anterior cerebral artery right
+MLSL	200805	medial lenticulostriate left
+MLSR	201386	medial lenticulostriate right
+LLSL	18945	lateral lenticulostriate left
+LLSR	18932	lateral lenticulostriate right
+MCAFL	18168	frontal pars of middle cerebral artery left
+MCAFR	18168	frontal pars of middle cerebral artery right
+MCAPL	25715	parietal pars of middle cerebral artery left
+MCAPL	26623	parietal pars of middle cerebral artery right
+MCATL	10184	temporal pars of middle cerebral artery left
+MCATL	10028	temporal pars of middle cerebral artery right
+MCAOL	21043	occipital pars of middle cerebral artery left
+MCAOL	19769	occipital pars of middle cerebral artery right
+MCAIL	69671	insular pars of middle cerebral artery left
+MCAIL	72311	insular pars of middle cerebral artery right
+PCATL	8635	temporal pars of posterior cerebral artery left
+PCATR	8621	temporal pars of posterior cerebral artery right
+PCAOL	36556	occipital pars of posterior cerebral artery left
+PCAOR	36558	occipital pars of posterior cerebral artery right
+PCTPL	13464	posterior choroidal and thalamoperfurators left
+PCTPR	14257	posterior choroidal and thalamoperfurators right
+ACTPL	105591	anteior choroidal and thalamoperfurators left
+ACTPR	103390	anterior choroidal and thalamoperfurators right
+BL	128337	basilar left
+BR	129963	basilar right
+SCL	34014	superior cerebellar left
+SCR	28523	superior cerebellar right
+ICL	12838	inferior cerebellar left
+ICR	12820	inferior cerebellar right
+LVL	110092	lateral ventricle left
+LVR	105437	lateral ventricle right
+		
+vascularterritory 2	volume	
+ACA	698321	
+MCA	329557	
+PCA	327072	
+VB	346495	
+		
+area	volume	
+frontal_L	242098	
+frontal_R	249674	
+parietal_L	133530	
+parietal_R	137367	
+temporal_L	135379	
+temporal_R	132439	
+cingullum_L	32843	
+cingullum_R	43424	
+occipital_L	104416	
+occipital_R	100804	
+insula_L	17066	
+insula_R	16323	
+BasalGanglia_L	12398	
+BasalGanglia_R	11959	
+Thalamus_L	11100	
+Thalamus_R	10077	
+cerebellum_L	102137	
+cerebellum_R	103009	
+pons	21679	
+medulla	5672	
+CoronaRadiata_L	10613	
+CoronaRadiata_R	9593	
+CentrumSemiOvale_L	9802	
+CentrumSemiOvale_R	10062	
+CorpusCallosum	34909	
+InternalCapsule_L	8197	
+InternalCapsule_R	8061	
+Ventricle_L	11617	
+Ventricle_R	14037	
+IVventricle	4160	
+midbrain	16860	
