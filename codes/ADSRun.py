@@ -1,7 +1,10 @@
+# Copyright (c) 2021, Andreia V. Faria, Chin-Fu Liu
+# All rights reserved.
 #
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
-#
+# This program is free software; 
+# you can redistribute it and/or modify it under the terms of the GNU General Public License v3.0. 
+# See the LICENSE file or read the terms at https://www.gnu.org/licenses/gpl-3.0.en.html.
+
 
 import sys
 import os

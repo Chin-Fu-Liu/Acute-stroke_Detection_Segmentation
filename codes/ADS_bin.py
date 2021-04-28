@@ -1,7 +1,9 @@
+# Copyright (c) 2021, Andreia V. Faria, Chin-Fu Liu
+# All rights reserved.
 #
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
-#
+# This program is free software; 
+# you can redistribute it and/or modify it under the terms of the GNU General Public License v3.0. 
+# See the LICENSE file or read the terms at https://www.gnu.org/licenses/gpl-3.0.en.html.
 
 try:
     import tensorflow.keras
@@ -16,8 +18,6 @@ from tensorflow.compat.v2.keras.utils import multi_gpu_model
 
 # # Use on GPU
 import os
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID" 
-os.environ['CUDA_VISIBLE_DEVICES'] = "" # or '1' or whichever GPU is available on your machine
 
 # for save model
 import h5py
@@ -145,20 +145,6 @@ def Stroke_closing(img):
 
 def Stroke_connected(img, connect_radius=1):
     return morphology.binary_dilation(img, morphology.ball(radius=connect_radius))
-
-
-def remove_small_objects(img, remove_max_size=5):
-    binary = np.zeros_like(img)
-    binary[binary>0] = 1
-    labels = morphology.label(binary)
-    labels_num = [len(labels[labels==each]) for each in np.unique(labels)]
-#     print(np.unique(labels))
-#     print(labels_num)
-    new_img = copy.copy(img)
-    for index in np.unique(labels):
-        if labels_num[index]<remove_max_size:
-            new_img[labels==index] = 0
-    return new_img
 
 def check_regions(img):
     binary = np.zeros_like(img)
@@ -508,8 +494,10 @@ def ADS_pipeline(SubjDir,
         
         pixdim = Dwi_imgJ.header.get_zooms()
         VolSpacing = 1
-        for _ in pixdim:
-            VolSpacing = VolSpacing*_
+        for _ in range(3):
+            i = pixdim[_]
+            if i !=0:
+                    VolSpacing = VolSpacing*i
         
     if not os.path.exists(B0Path):
         sys.exit('No SujbectID_b0.nii or SujbectID_b0.nii.gz file under subject folder!') 
