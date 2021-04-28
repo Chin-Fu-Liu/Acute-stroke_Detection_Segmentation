@@ -22,6 +22,8 @@ ${ROOT}
 |-- data
     |-- Trained_Nets
     |-- examples
+        |-- Subject01
+        |-- Subject01
     |-- template
 |-- codes
 ```
