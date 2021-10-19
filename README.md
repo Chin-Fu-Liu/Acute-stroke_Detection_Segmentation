@@ -169,6 +169,9 @@ python PATHTO/Acute_Stroke_Detection/codes/ADSRun.py -input PATH_TO_Subject01_FO
 
 ## Reference  
 
+The preprint of this work can be found at https://www.medrxiv.org/content/10.1101/2021.10.19.21257543v1
+https://zenodo.org/badge/345778372.svg
+
 ## License 
 This work is licensed under GNU General Public License v3.0, as found in the LICENSE file.
 
