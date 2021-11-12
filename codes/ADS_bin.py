@@ -321,10 +321,16 @@ def gen_result_png(SubjDir,
     plt.rcParams["axes.grid"] = False
     
     SubjID = os.path.join(SubjDir,'').split('/')[-2]
-    DwiPath = os.path.join(SubjDir, SubjID + '_DWI.nii.gz')
-    B0Path = os.path.join(SubjDir, SubjID + '_b0.nii.gz')
-    ADCPath = os.path.join(SubjDir, SubjID + '_ADC.nii.gz')
+    DwiPath = os.path.join(SubjDir, SubjID + '_DWI.nii')
+    B0Path = os.path.join(SubjDir, SubjID + '_b0.nii')
+    ADCPath = os.path.join(SubjDir, SubjID + '_ADC.nii')
     LPPath = os.path.join(SubjDir, SubjID + '_' + lesion_name + '.nii.gz')
+    if not os.path.exists(DwiPath):
+        DwiPath = os.path.join(SubjDir, SubjID + '_DWI.nii.gz')
+    if not os.path.exists(B0Path):
+        B0Path = os.path.join(SubjDir, SubjID + '_b0.nii.gz')
+    if not os.path.exists(ADCPath):
+        ADCPath = os.path.join(SubjDir, SubjID + '_ADC.nii.gz')
     
     Dwi_imgJ, Dwi_img, _ = load_img_AffMat(DwiPath)
     B0_imgJ, B0_img, B0_AffMat = load_img_AffMat(B0Path)
