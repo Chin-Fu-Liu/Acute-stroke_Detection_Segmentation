@@ -380,7 +380,7 @@ def gen_result_png(SubjDir,
     plt.close()
     
 def get_VasLobeTemp(TemplateDir):
-    vas_pth = os.path.join(TemplateDir,'ArterialAtlas_padding.nii.gz')
+    vas_pth = os.path.join(TemplateDir,'ArterialAtlas_padding_new.nii')
     lobe_pth = os.path.join(TemplateDir,'lobe_atlas_padding.nii.gz') 
 
     vas_imgJ, vas_img, vas_AffMat = load_img_AffMat(vas_pth)
@@ -400,7 +400,7 @@ def get_VasLobeTemp(TemplateDir):
     vas_L1_name = [ _.split('\t')[0] for _ in vas_contents]
     
     lobe_L1 = [ _.split('\t')[1].replace('\n','') for _ in lobe_contents]
-    lobe_L1
+#     lobe_L1
     
     def get_L2_label_idx(L):
         if L == 'ACA':
@@ -413,12 +413,12 @@ def get_VasLobeTemp(TemplateDir):
             return 4
         else:
             return 0
-    vas_L2 = ['ACA', 'MCA', 'PCA', 'VB']
 
     vas_combine = np.zeros_like(vas_img)
-    for idx in range(len(vas_L2)):
+    for idx in range(len(vas_L1)):
         vas_combine[(vas_img==idx+1)] = get_L2_label_idx(vas_L2[idx])
         
+    vas_L2 = ['ACA', 'MCA', 'PCA', 'VB']
 #     print(np.max(vas_combine))
     
     return vas_img, vas_combine, lobe_img, vas_L1, vas_L1_name, vas_L2, lobe_L1
