@@ -5,7 +5,7 @@
 We provide a tool for detection and segmentation of ischemic acute and sub-acute strokes in brain diffusion weighted MRIs (DWIs). The deep learning networks were trained and tested on a large dataset of 2,348 clinical images, and further tested on 280 images of an external dataset. Our proposed model outperformed generic nets and patch-wise approaches, particularly in small lesions, with lower false positive rate, balanced precision and sensitivity, and robustness to data perturbs (e.g., artefacts, low resolution, technical heterogeneity). The agreement with human delineation rivaled the inter-evaluator agreement; the automated lesion quantification (e.g., volume) had virtually total agreement with human quantification. The method has minimal computational requirements and is fast: the lesion inference takes 20~30 seconds in CPU and the total processing, including registration and generation of results/report takes ~ 2.5 mins. The outputs, provided with a single command line, are: the predicted lesion mask, the lesion mask and the image inputs (DWI, B0, ADC) in standard space, MNI, and the quantification of the lesion per brain structure and per vascular territory.
 
 
-The latest version ADSv1 was uploaded on NITRC only for better maintenance. Please visit ADSv1.
+The latest version ADSv1 was uploaded on NITRC only for better maintenance. Please visit ADSv1 for more information.
 https://www.nitrc.org/frs/?group_id=1520#
 
 
