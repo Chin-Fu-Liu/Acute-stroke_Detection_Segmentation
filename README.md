@@ -175,7 +175,15 @@ python PATHTO/Acute_Stroke_Detection/codes/ADSRun.py -input PATH_TO_Subject01_FO
 
 ## Reference  
 
-The preprint of this work can be found at https://www.medrxiv.org/content/10.1101/2021.10.19.21257543v1
+For stroke segmentaion and quantification: Liu CF, Hsu J, Xu X, Ramachandran S, Wang V, Miller MI, Hillis AE, Faria AV. Deep learning-based detection and segmentation of diffusion abnormalities in acute ischemic stroke. Commun Med 1, 61 (2021) https://doi.org/10.1038/s43856-021-00062-8
+
+For ASPECTS calculation: Liu CF, Li J, Kim G, Miller MI, Hillis AE, Faria AV. Automatic comprehensive aspects reports in clinical acute stroke MRIs. Sci Rep 13, 3784 (2023). https://doi.org/10.1038/s41598-023-30242-6
+
+For automatic radiological reports: Liu CF, Zhao Y, Yedavalli V, Leigh R, Falcao V, Miller MI, Hillis AE, Faria AV. Automatic comprehensive radiological reports for clinical acute stroke MRIs. Commun Med 3, 95 (2023). https://doi.org/10.1038/s43856-023-00327-4
+
+For the dataset: Liu CF, Leigh R, Johnson B, Urrutia V, Hsu J, Xu X, Li X, Mori S, Hillis AE, Faria AV. A large public dataset of annotated clinical MRIs and metadata of patients with acute stroke. Sci Data 10, 548 (2023). https://doi.org/10.1038/s41597-023-02457-9
+
+For the dataset source: Faria, Andreia V. Annotated Clinical MRIs and Linked Metadata of Patients with Acute Stroke, Baltimore, Maryland, 2009-2019. Inter-university Consortium for Political and Social Research [distributor], 2022-12-12. https://doi.org/10.3886/ICPSR38464.v5
 
 
 
